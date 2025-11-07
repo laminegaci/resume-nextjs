@@ -3,38 +3,32 @@
     "contactItems": [
       {
         "type": "email",
-        "label": "hello@imsruthi.com",
+        "label": "mohamed61lamine@gmail.com",
         "icon": "/images/icon/mail-icon.svg",
         "link": "mailto:hello@imsruthi.com"
       },
       {
         "type": "phone",
-        "label": "+901 5588 2500",
+        "label": "+213 792 375 039",
         "icon": "/images/icon/call-icon.svg",
         "link": "tel:+90155882500"
-      },
-      {
-        "type": "website",
-        "label": "www.mywebsite.com",
-        "icon": "/images/icon/web-icon.svg",
-        "link": "https://www.mywebsite.com"
       }
     ],
     "socialItems": [
       {
-        "platform": "dribbble",
-        "icon": "/images/icon/dribble-icon.svg",
-        "link": "https://dribbble.com"
+        "platform": "github",
+        "icon": "/images/icon/github-mark.svg",
+        "link": "https://github.com/laminegaci"
       },
       {
         "platform": "linkedin",
         "icon": "/images/icon/linkedin-icon.svg",
-        "link": "https://linkedin.com"
+        "link": "https://www.linkedin.com/in/mohamed-lamine-gaci-183650201/"
       },
       {
         "platform": "facebook",
         "icon": "/images/icon/facebook-icon.svg",
-        "link": "https://facebook.com"
+        "link": "https://www.facebook.com/mohamed.lamine.dev"
       }
     ]
   },

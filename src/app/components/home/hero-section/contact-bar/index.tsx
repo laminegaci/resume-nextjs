@@ -58,8 +58,9 @@ const ContactBar = () => {
               {contactBarData?.socialItems?.map((value: any, index: number) => (
                 <Link
                   key={index}
-                  onClick={(e) => e.preventDefault()}
-                  href={"#!"}
+                  // onClick={(e) => e.preventDefault()}
+                  href={value?.link}
+                  target="_blank"
                 >
                   <Image
                     src={getImgPath(value?.icon)}

@@ -20,7 +20,7 @@ const index = () => {
                   />
                 </div>
               </div>
-              <h3>Full-Stack Developer | PHP Laravel Specialist</h3>
+              <h3>Full-Stack Web Developer | PHP Laravel Specialist</h3>
             </div>
             <p className="text-secondary font-normal max-w-md xl:max-w-xl">
               Young dynamic and motivated web developer, passionate about computer science and
@@ -30,7 +30,7 @@ const index = () => {
             </p>
           </div>
           <Image
-            src={getImgPath("/images/home/banner/banner-img.png")}
+            src={getImgPath("/images/home/banner/me.png")}
             alt="banner-img"
             width={685}
             height={650}
@@ -40,7 +40,7 @@ const index = () => {
       </div>
       <div className="absolute right-0 top-0 hidden h-auto w-1/2 lg:block 2xl:h-171.5 2xl:w-187.5">
         <Image
-          src={getImgPath("/images/home/banner/banner-img.png")}
+          src={getImgPath("/images/home/banner/me.png")}
           alt="banner-img"
           width={685}
           height={650}

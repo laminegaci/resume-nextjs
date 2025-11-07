@@ -34,20 +34,20 @@ const AboutMe = () => {
               </div>
 
               <div className="w-full lg:max-w-2xl flex-1">
-                <p>
+                {/* <p>
                   There are many variations of passages of Lorem Ipsum
                   available, but the majority have suffered alteration in some
                   form, by injected humour, or randomised words which don't look
                   even slightly believable. If you are going to use a passage of
                   Lorem Ipsum, you need to be sure there isn't anything
                   embarrassing hidden in the middle of text.
-                </p>
+                </p> */}
 
                 <div className="grid grid-cols-3 py-10 xl:py-16 gap-5 border-b border-mistGray">
                   {[
-                    { count: "06", label: "Years of experience" },
-                    { count: "165+", label: "Happy Clients" },
-                    { count: "1800+", label: "Project Completed" },
+                    { count: "05", label: "Years of experience" },
+                    { count: "5+", label: "Happy Clients" },
+                    { count: "8+", label: "Project Completed" },
                   ].map((item, i) => (
                     <div key={i}>
                       <h3>{item.count}</h3>
@@ -69,7 +69,7 @@ const AboutMe = () => {
                     <p className="text-base xl:text-xl text-black">Language</p>
                   </div>
                   <div className="flex flex-wrap justify-center items-center gap-2.5">
-                    {["English", "Hindi", "Malayalam"].map((lang) => (
+                    {["English", "French", "Arabic"].map((lang) => (
                       <p
                         key={lang}
                         className="bg-white py-2 md:py-3.5 px-4 md:px-5 w-fit rounded-full text-base xl:text-xl"
