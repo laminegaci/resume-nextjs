@@ -3,32 +3,32 @@ import React from 'react';
 const ExperienceSec = () => {
     const experiences = [
         {
-            year: "2018",
-            title: "Junior UX Designer",
-            company: "www.startup.com",
-            type: "Fulltime",
-            description: "Suffered alteration in some form by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum"
-        },
-        {
             year: "2019",
-            title: "Senior UX Designer",
-            company: "www.googly.com",
-            type: "Remote",
-            description: "Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem"
+            title: "Stagaire Web Developer",
+            company: "Edisoft Chéraga",
+            type: "Parttime",
+            description: "Creation of a web application for customer management using PHP."
         },
         {
-            year: "2020-2022",
-            title: "Team Lead Designer",
-            company: "www.company.com",
+            year: "2020 - 2021",
+            title: "ICT help desk agent",
+            company: "Amnal Staoueli",
             type: "Fulltime",
-            description: "Handful of model sentence structures, to generate Lorem Ipsum which looks reasonable. The generated"
+            description: "Regular technical assistance to users, resolving hardware and software issues, Technical support with the server and interact with the database."
+        },
+        {
+            year: "2021 - 2023",
+            title: "Web Developer",
+            company: "FB-Technologies Ouled fayet",
+            type: "Remote",
+            description: "Design and development of new websites/webapps and maintenance of existing ones, Creates PHP scripts to process large data volumes."
         },
         {
             year: "2023+",
-            title: "Team Lead Designer",
-            company: "www.latest.com",
+            title: "Backend Developer",
+            company: "Whitebay limited Sidi abdellah zeralda",
             type: "Fulltime",
-            description: "Release of Letraset sheets containing Lorem Ipsum passages and more recently with desktop publishing software"
+            description: "Designed, developed, and maintained scalable web applications using Laravel, Livewire, and Inertia.js. Collaborated with the front-end team and Built and optimized RESTful APIs to connect web platforms. Integrated third-party APIs (Stripe, PrestaShop, etc.) to synchronize data and automate business workflows."
         }
     ];
 
@@ -45,7 +45,7 @@ const ExperienceSec = () => {
                         {experiences.map((exp, index) => (
                             <div key={index} className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 md:gap-4 xl:gap-8 items-start relative">
                                 <div className="">
-                                    <h3 className="font-bold mb-2 text-black">{exp.year}</h3>
+                                    <h4 className="font-bold mb-2 text-black">{exp.year}</h4>
                                     <h4 className="text-lg font-normal">{exp.title}</h4>
                                 </div>
 
@@ -55,9 +55,9 @@ const ExperienceSec = () => {
                                     )}
 
                                     <div className="no-print absolute left-0 top-0 transform -translate-x-1/2">
-                                        <div className={`no-print w-3.5 h-3.5 rounded-full border-1 bg-white flex items-center justify-center ${index === 1 ? 'border-primary' : 'border-black'
+                                        <div className={`no-print w-3.5 h-3.5 rounded-full border-1 bg-white flex items-center justify-center ${index === 3 ? 'border-primary' : 'border-black'
                                             }`}>
-                                            {index === 1 && (
+                                            {index === 3 && (
                                                 <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
                                             )}
                                         </div>
