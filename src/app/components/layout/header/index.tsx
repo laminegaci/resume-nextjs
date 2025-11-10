@@ -5,7 +5,11 @@ import Logo from "../logo";
 
 const Header = () => {
     const handleDownloadPDF = () => {
-        window.print();
+        const pdfPath = "/files/resume.pdf"; // path from public folder
+        const link = document.createElement("a");
+        link.href = pdfPath;
+        link.download = "Mohamed_Lamine_Resume.pdf"; // the name when downloaded
+        link.click();
     };
     return (
         <header className="navbar top-0 left-0 z-999 w-full absolute">
@@ -13,7 +17,7 @@ const Header = () => {
                 <nav className="py-7">
                     <div className="flex items-center gap-4 sm:gap-8">
                         <div>
-                            <Logo />
+                            {/* <Logo /> */}
                         </div>
 
                     
