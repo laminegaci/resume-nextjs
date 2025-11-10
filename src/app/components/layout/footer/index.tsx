@@ -8,7 +8,7 @@ const Footer = () => {
           <div className="relative flex items-center w-full">
             <div className="flex-grow h-px bg-black" />
             <div className="mx-4">
-              <Logo />
+              {/* <Logo /> */}
             </div>
             <div className="flex-grow h-px bg-black" />
           </div>

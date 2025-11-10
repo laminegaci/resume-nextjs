@@ -16,7 +16,7 @@ const page = () => {
         <ExperienceSec />
         <EducationSkills />
         <LatestWork />
-        <Contact />
+        {/* <Contact /> */}
       </main>
     </>
   )
