@@ -1,40 +1,58 @@
 {
   "workData": [
     {
-      "image": "/images/work/work-img-1.jpg",
-      "title": "Mug Sticker Designing",
-      "client": "John Honnai",
-      "slug": "mug-sticker-designing"
+      "image": "/images/work/site-web-india.png",
+      "title": "Site Web",
+      "client": "india mahdavi",
+      "slug": "site-web-india-mahdavi"
     },
     {
-      "image": "/images/work/work-img-2.jpg",
-      "title": "Mobile App Design",
-      "client": "John Honnai",
-      "slug": "mobile-app-design"
+      "image": "/images/work/erp-india.png",
+      "title": "ERP System",
+      "client": "india mahdavi",
+      "slug": "erp-india-mahdavi"
     },
     {
-      "image": "/images/work/work-img-3.jpg",
-      "title": "Fashion Website Template",
-      "client": "John Honnai",
-      "slug": "fashion-website-template"
+      "image": "/images/work/at.png",
+      "title": "Web App for AT Management",
+      "client": "",
+      "slug": "at-management"
+    },
+    {
+      "image": "/images/work/henkel.png",
+      "title": "Web Application for Group Henkel",
+      "client": "",
+      "slug": "web-application-for-group-henkel"
     },
     {
       "image": "/images/work/work-img-4.jpg",
-      "title": "Book Cover Design",
-      "client": "John Honnai",
-      "slug": "book-cover-design"
+      "title": "Allo khedma",
+      "client": "",
+      "slug": "allo-khedma"
     },
     {
       "image": "/images/work/work-img-5.jpg",
-      "title": "Mobile App Design",
-      "client": "John Honnai",
-      "slug": "mobile-app-design"
+      "title": "Hanooty",
+      "client": "",
+      "slug": "hanooty"
     },
     {
-      "image": "/images/work/work-img-6.jpg",
-      "title": "Mug Sticker Designing",
-      "client": "John Honnai",
-      "slug": "mug-sticker-designing"
+      "image": "/images/work/adi.png",
+      "title": "ADI Performance",
+      "client": "",
+      "slug": "adi-performance"
+    },
+    {
+      "image": "/images/work/work-img-2.jpg",
+      "title": "Khidma Pub Public Website",
+      "client": "",
+      "slug": "khidma-pub-public-website"
+    },
+    {
+      "image": "/images/work/work-img-1.jpg",
+      "title": "Web Application for Customer Management",
+      "client": "",
+      "slug": "web-application-for-customer-management"
     }
   ]
 }
