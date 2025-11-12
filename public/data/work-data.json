@@ -2,7 +2,7 @@
   "workData": [
     {
       "image": "/images/work/site-web-india.png",
-      "title": "Site Web",
+      "title": "Site E-commerce",
       "client": "india mahdavi",
       "slug": "site-web-india-mahdavi"
     },
@@ -43,15 +43,15 @@
       "slug": "adi-performance"
     },
     {
-      "image": "/images/work/work-img-2.jpg",
+      "image": "/images/work/khidmapub.jpg",
       "title": "Khidma Pub Public Website",
-      "client": "",
+      "client": "Photographer",
       "slug": "khidma-pub-public-website"
     },
     {
-      "image": "/images/work/work-img-1.jpg",
+      "image": "/images/work/edisoft.png",
       "title": "Web Application for Customer Management",
-      "client": "",
+      "client": "Edisoft",
       "slug": "web-application-for-customer-management"
     }
   ]
