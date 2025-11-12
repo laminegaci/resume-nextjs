@@ -4,30 +4,30 @@ const ExperienceSec = () => {
     const experiences = [
         {
             year: "2019",
-            title: "Stagaire Web Developer",
+            title: "Web Developer Intern",
             company: "Edisoft Chéraga",
-            type: "Parttime",
+            type: "Part-time",
             description: "Creation of a web application for customer management using PHP."
         },
         {
             year: "2020 - 2021",
             title: "ICT help desk agent",
             company: "Amnal Staoueli",
-            type: "Fulltime",
+            type: "Fulltime, On Site",
             description: "Regular technical assistance to users, resolving hardware and software issues, Technical support with the server and interact with the database."
         },
         {
             year: "2021 - 2023",
             title: "Web Developer",
             company: "FB-Technologies Ouled fayet",
-            type: "Remote",
+            type: "Fulltime, Remote",
             description: "Design and development of new websites/webapps and maintenance of existing ones, Creates PHP scripts to process large data volumes."
         },
         {
             year: "2023+",
             title: "Backend Developer",
             company: "Whitebay limited Sidi abdellah zeralda",
-            type: "Fulltime",
+            type: "Fulltime, On Site",
             description: "Designed, developed, and maintained scalable web applications using Laravel, Livewire, and Inertia.js. Collaborated with the front-end team and Built and optimized RESTful APIs to connect web platforms. Integrated third-party APIs (Stripe, PrestaShop, etc.) to synchronize data and automate business workflows."
         }
     ];
