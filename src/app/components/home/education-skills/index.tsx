@@ -36,69 +36,65 @@ const EducationSkills = () => {
           />
           <div className="relative z-10 py-16 md:py-32">
             <div className="flex items-center justify-between gap-2 border-b border-black pb-7 mb-9 xl:mb-16">
-              <h2>Education & Skills</h2>
-              <p className="text-xl text-orange-500">( 03 )</p>
+              <h2>Tech Stack</h2>
+              <p className="text-xl text-orange-500"></p>
             </div>
             <div className="flex flex-col lg:flex-row items-center gap-10 xl:gap-20">
-              <div className="w-full lg:max-w-md flex flex-col gap-0 xl:gap-8">
-                {educationData?.education?.map((value: any, index: any) => {
-                  return (
-                    <div key={index} className="flex items-start gap-6">
-                      <div className="no-print mt-2.5 w-3.5 h-3.5 rounded-full border-1 bg-white flex items-center justify-center border-black">
-                        <div className="w-1.5 h-1.5 rounded-full bg-black"></div>
-                      </div>
-                      <div className="flex-1 flex flex-col gap-2">
-                        <h5>{value?.title}</h5>
-                        <p className="font-normal">{value?.description}</p>
-                      </div>
-                    </div>
-                  );
-                })}
+          <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-12 gap-8 justify-items-center">
+            {[
+              // --- Frontend ---
+              { name: "HTML5", icon: "/images/icon/html.svg" },
+              { name: "CSS3", icon: "/images/icon/css.svg" },
+              { name: "JavaScript", icon: "/images/icon/javascript.svg" },
+              { name: "TypeScript", icon: "/images/icon/typescript.svg" },
+              { name: "React", icon: "/images/icon/react.svg" },
+              { name: "Vue", icon: "/images/icon/vue.svg" },
+              { name: "Next.js", icon: "/images/icon/nextjs.svg" },
+              { name: "TailwindCSS", icon: "/images/icon/tailwind.svg" },
+              { name: "Bootstrap", icon: "/images/icon/bootstrap.svg" },
+              { name: "Semantic", icon: "/images/icon/semantic.svg" },
+
+              // --- Backend ---
+              { name: "PHP", icon: "/images/icon/php.svg" },
+              { name: "Laravel", icon: "/images/icon/laravel.svg" },
+              { name: "Node.js", icon: "/images/icon/nodejs.svg" },
+
+              // --- Database ---
+              { name: "MySQL", icon: "/images/icon/mysql.svg" },
+
+              // --- Tools & DevOps ---
+              { name: "Git", icon: "/images/icon/git.svg" },
+              { name: "GitHub", icon: "/images/icon/github.svg" },
+              { name: "GitHub", icon: "/images/icon/gitlab.svg" },
+              { name: "Docker", icon: "/images/icon/docker.svg" },
+              { name: "VS Code", icon: "/images/icon/vscode.svg" },
+              { name: "Apache", icon: "/images/icon/apache.svg" },
+              { name: "Nginx", icon: "/images/icon/nginx.svg" },
+            ].map((skill) => (
+              <div
+                key={skill.name}
+                className="group flex flex-col items-center text-center transition-transform hover:-translate-y-2"
+              >
+                <div className="p-4 bg-gray-100 rounded-2xl shadow-sm group-hover:shadow-md transition-shadow">
+                  <Image
+                    src={getImgPath(skill.icon)}
+                    alt={skill.name}
+                    width={50}
+                    height={50}
+                    className="object-contain"
+                  />
+                </div>
+                <p className="mt-3 text-sm font-medium text-gray-700 group-hover:text-orange-500">
+                  {skill.name}
+                </p>
               </div>
-              <div className="grid grid-cols-2 xs:grid-cols-3 gap-5 xl:gap-7 w-full">
-                {educationData?.skills?.map((value: any, index: any) => {
-                  return (
-                    <div
-                      key={index}
-                      className="p-4 xl:p-6 border border-softGray rounded-lg flex flex-col gap-5 sm:gap-10 items-center justify-between"
-                    >
-                      <div className="flex flex-col items-center gap-5">
-                        <Image
-                          src={getImgPath(value?.icon)}
-                          alt="icon"
-                          width={70}
-                          height={70}
-                        />
-                        <p className="text-black font-normal">{value?.name}</p>
-                      </div>
-                      <div className="flex gap-1">
-                        {[...Array(5)].map((_, i) => (
-                          <svg
-                            key={i}
-                            width="9"
-                            height="9"
-                            viewBox="0 0 9 9"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                          >
-                            <rect
-                              width="9"
-                              height="9"
-                              rx="4.5"
-                              fill={i < value?.rating ? "#FE4300" : "#C0D8E0"}
-                            />
-                          </svg>
-                        ))}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
-    </section>
+    </div>
+  </div>
+</section>
   );
 };
 
