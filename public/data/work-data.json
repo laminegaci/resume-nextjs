@@ -3,25 +3,25 @@
     {
       "image": "/images/work/site-web-india.png",
       "title": "Site E-commerce",
-      "client": "india mahdavi",
+      "client": "India Mahdavi",
       "slug": "site-web-india-mahdavi"
     },
     {
       "image": "/images/work/erp-india.png",
       "title": "ERP System",
-      "client": "india mahdavi",
+      "client": "India Mahdavi",
       "slug": "erp-india-mahdavi"
     },
     {
       "image": "/images/work/at.png",
       "title": "Web App for AT Management",
-      "client": "",
+      "client": "BA",
       "slug": "at-management"
     },
     {
       "image": "/images/work/henkel.png",
-      "title": "Web Application for Group Henkel",
-      "client": "",
+      "title": "Web Application",
+      "client": "Henkel",
       "slug": "web-application-for-group-henkel"
     },
     {
@@ -31,7 +31,7 @@
       "slug": "allo-khedma"
     },
     {
-      "image": "/images/work/work-img-5.jpg",
+      "image": "/images/work/hanooty.png",
       "title": "Hanooty",
       "client": "",
       "slug": "hanooty"

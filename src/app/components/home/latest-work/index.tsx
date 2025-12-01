@@ -89,7 +89,9 @@ const LatestWork = () => {
                           height={30}
                         />
                       </div>
-                      <p>Client: {value?.client}</p>
+                      {
+                        value?.client && <p className="text-sm text-black/60">{value?.client}</p>
+                      }
                     </div>
                   </div>
                 );
