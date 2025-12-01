@@ -21,11 +21,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      {/* <body className={bricolageGrotesque.className}> */}
-        {/* <Header /> */}
-        {/* {children} */}
-        {/* <Footer/> */}
-      {/* </body> */}
+      <body className={bricolageGrotesque.className}>
+        <Header />
+        {children}
+        <Footer/>
+      </body>
     </html>
   );
 }
