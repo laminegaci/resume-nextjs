@@ -77,10 +77,10 @@ const ExperienceSec = () => {
                   </div>
 
                   <div
-                    className={`card-hover bg-white rounded-xl p-6 border ${
+                    className={`card-hover bg-white dark:bg-dark rounded-xl p-6 border ${
                       exp.isCurrent
                         ? "border-primary/30 shadow-lg shadow-primary/10"
-                        : "border-mistGray"
+                        : "border-mistGray dark:border-white/10"
                     }`}
                   >
                     <div className="flex flex-wrap items-center gap-3 mb-3">
@@ -88,12 +88,12 @@ const ExperienceSec = () => {
                         className={`text-sm font-mono font-semibold px-3 py-1 rounded-full ${
                           exp.isCurrent
                             ? "bg-primary/10 text-primary"
-                            : "bg-softGray text-secondary"
+                            : "bg-softGray dark:bg-white/5 text-secondary dark:text-gray-400"
                         }`}
                       >
                         {exp.year}
                       </span>
-                      <span className="text-xs text-secondary">{exp.type}</span>
+                      <span className="text-xs text-secondary dark:text-gray-400">{exp.type}</span>
                     </div>
 
                     <h5 className="text-lg md:text-xl font-semibold text-dark mb-2">
@@ -104,7 +104,7 @@ const ExperienceSec = () => {
                       {exp.company}
                     </p>
 
-                    <p className="text-sm text-secondary leading-relaxed">
+                    <p className="text-sm text-secondary dark:text-gray-400 leading-relaxed">
                       {exp.description}
                     </p>
                   </div>

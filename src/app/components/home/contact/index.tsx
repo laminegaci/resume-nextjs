@@ -105,10 +105,10 @@ const Contact = () => {
     return (
       <section id="contact" className="scroll-mt-24">
         <div className="container py-16 md:py-28">
-          <div className="section-heading">
-            <h2>Contact Me</h2>
-            <p className="section-number"></p>
-          </div>
+            <div className="section-heading">
+              <h2>Contact Me</h2>
+              <p className="section-number">( 05 )</p>
+            </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             <div className="space-y-8">
               {[1, 2, 3].map((i) => (
@@ -130,7 +130,7 @@ const Contact = () => {
       <div className="container py-16 md:py-28">
         <div className="section-heading">
           <h2>Contact Me</h2>
-          <p className="section-number"></p>
+          <p className="section-number">( 05 )</p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
@@ -151,7 +151,7 @@ const Contact = () => {
                   href={info.link}
                   className="flex items-center gap-4 group"
                 >
-                  <div className="w-12 h-12 bg-softGray rounded-full flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                  <div className="w-12 h-12 bg-softGray dark:bg-white/5 rounded-full flex items-center justify-center group-hover:bg-primary/10 transition-colors">
                     <Image
                       src={getImgPath(
                         info.type === "email"

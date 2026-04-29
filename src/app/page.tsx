@@ -6,12 +6,14 @@ import HeroSection from "./components/home/hero-section";
 import LatestWork from "./components/home/latest-work";
 import ScrollProgress from "./components/layout/scroll-progress";
 import BackToTop from "./components/layout/back-to-top";
+import SkipLink from "./components/ui/skip-link";
 
 const page = () => {
   return (
     <>
+      <SkipLink />
       <ScrollProgress />
-      <main>
+      <main id="main-content" role="main">
         <HeroSection />
         <AboutMe />
         <ExperienceSec />

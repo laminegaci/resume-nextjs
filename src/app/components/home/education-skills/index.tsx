@@ -3,6 +3,7 @@ import { getDataPath, getImgPath } from "@/utils/image";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { EducationData, Skill } from "@/app/types/portfolio";
+import Reveal from "@/app/components/ui/reveal";
 
 const skills: Skill[] = [
   { name: "HTML5", icon: "/images/icon/html.svg", category: "frontend" },
@@ -46,8 +47,8 @@ const EducationSkills = () => {
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
         setEducationData(data?.educationData);
-      } catch (error) {
-        console.error("Error fetching education data:", error);
+      } catch {
+        console.error("Error fetching education data:");
       } finally {
         setLoading(false);
       }
@@ -66,54 +67,59 @@ const EducationSkills = () => {
 
   return (
     <section id="skills" className="scroll-mt-24">
-      <div className="border-t border-softGray py-16 md:py-28">
+      <div className="border-t border-softGray dark:border-white/10 py-16 md:py-28">
         <div className="container">
-          <div className="section-heading">
-            <h2>Tech Stack</h2>
-            <p className="section-number"></p>
-          </div>
+          <Reveal>
+            <div className="section-heading">
+              <h2>Tech Stack</h2>
+              <p className="section-number">( 03 )</p>
+            </div>
+          </Reveal>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
             <div className="lg:col-span-2">
               <div className="space-y-8">
-                {Object.entries(groupedSkills).map(([category, categorySkills]) => (
-                  <div key={category}>
-                    <h5 className="text-base font-semibold text-dark mb-4 uppercase tracking-wider">
-                      {categoryLabels[category]}
-                    </h5>
-                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
-                      {categorySkills.map((skill) => (
-                        <div
-                          key={skill.name}
-                          className="group flex flex-col items-center text-center card-hover"
-                        >
-                          <div className="p-4 bg-white rounded-xl shadow-sm border border-mistGray group-hover:border-primary/30 group-hover:shadow-md transition-all">
-                            <Image
-                              src={getImgPath(skill.icon)}
-                              alt={skill.name}
-                              width={40}
-                              height={40}
-                              className="object-contain group-hover:scale-110 transition-transform duration-300"
-                            />
+                {Object.entries(groupedSkills).map(([category, categorySkills], idx) => (
+                  <Reveal key={category} delay={idx * 0.1}>
+                    <div>
+                      <h5 className="text-base font-semibold text-dark dark:text-white mb-4 uppercase tracking-wider">
+                        {categoryLabels[category]}
+                      </h5>
+                      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
+                        {categorySkills.map((skill) => (
+                          <div
+                            key={skill.name}
+                            className="group flex flex-col items-center text-center card-hover"
+                          >
+                            <div className="p-4 bg-white dark:bg-dark rounded-xl shadow-sm border border-mistGray dark:border-white/10 group-hover:border-primary/30 group-hover:shadow-md transition-all">
+                              <Image
+                                src={getImgPath(skill.icon)}
+                                alt={skill.name}
+                                width={40}
+                                height={40}
+                                className="object-contain group-hover:scale-110 transition-transform duration-300"
+                                loading="lazy"
+                              />
+                            </div>
+                            <p className="mt-2 text-xs font-medium text-secondary dark:text-gray-400 group-hover:text-primary transition-colors">
+                              {skill.name}
+                            </p>
                           </div>
-                          <p className="mt-2 text-xs font-medium text-secondary group-hover:text-primary transition-colors">
-                            {skill.name}
-                          </p>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
-                  </div>
+                  </Reveal>
                 ))}
               </div>
             </div>
 
-            <div className="space-y-6">
-              <div className="bg-softGray rounded-xl p-6">
-                <h5 className="text-lg font-semibold text-dark mb-4">Education</h5>
+            <Reveal direction="right" className="space-y-6">
+              <div className="bg-softGray dark:bg-dark/50 rounded-xl p-6">
+                <h5 className="text-lg font-semibold text-dark dark:text-white mb-4">Education</h5>
                 {loading ? (
                   <div className="space-y-4">
                     {[1, 2].map((i) => (
-                      <div key={i} className="h-20 bg-white rounded animate-pulse" />
+                      <div key={i} className="h-20 bg-white dark:bg-dark rounded animate-pulse" />
                     ))}
                   </div>
                 ) : educationData?.education?.length ? (
@@ -121,24 +127,24 @@ const EducationSkills = () => {
                     {educationData!.education.map((edu, index) => (
                       <div
                         key={index}
-                        className="bg-white rounded-lg p-4 border border-mistGray"
+                        className="bg-white dark:bg-dark rounded-lg p-4 border border-mistGray dark:border-white/10"
                       >
-                        <p className="text-sm font-semibold text-dark mb-1">
+                        <p className="text-sm font-semibold text-dark dark:text-white mb-1">
                           {edu.title}
                         </p>
-                        <p className="text-xs text-secondary leading-relaxed">
+                        <p className="text-xs text-secondary dark:text-gray-400 leading-relaxed">
                           {edu.description}
                         </p>
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-sm text-secondary">
+                  <p className="text-sm text-secondary dark:text-gray-400">
                     Education details coming soon.
                   </p>
                 )}
               </div>
-            </div>
+            </Reveal>
           </div>
         </div>
       </div>

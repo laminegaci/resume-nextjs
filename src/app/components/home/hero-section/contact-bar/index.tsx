@@ -29,17 +29,17 @@ const ContactBar = () => {
   if (loading) {
     return (
       <section>
-        <div className="border-t border-softGray">
+        <div className="border-t border-softGray dark:border-white/10">
           <div className="container">
             <div className="flex items-center justify-between py-6 md:py-7">
               <div className="flex gap-4">
                 {[1, 2].map((i) => (
-                  <div key={i} className="w-32 h-6 bg-softGray rounded animate-pulse" />
+                  <div key={i} className="w-32 h-6 bg-softGray dark:bg-dark rounded animate-pulse" />
                 ))}
               </div>
               <div className="flex gap-4">
                 {[1, 2, 3].map((i) => (
-                  <div key={i} className="w-7 h-7 bg-softGray rounded animate-pulse" />
+                  <div key={i} className="w-7 h-7 bg-softGray dark:bg-dark rounded animate-pulse" />
                 ))}
               </div>
             </div>
