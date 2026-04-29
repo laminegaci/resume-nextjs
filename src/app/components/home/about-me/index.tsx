@@ -1,120 +1,63 @@
-import { getImgPath } from "@/utils/image";
-import Image from "next/image";
 import Reveal from "@/app/components/ui/reveal";
-import AnimatedCounter from "@/app/components/ui/animated-counter";
+import SectionLabel from "@/app/components/ui/section-label";
 
-const stats = [
-  { count: 5, label: "Years of Experience", suffix: "+" },
-  { count: 5, label: "Happy Clients", suffix: "+" },
-  { count: 8, label: "Projects Completed", suffix: "+" },
+const facts = [
+  { label: "Based in", value: "Algiers, DZ" },
+  { label: "Years building", value: "5+" },
+  { label: "Speaks", value: "EN · FR · AR" },
+  { label: "Open to", value: "Remote roles" },
 ];
-
-const languages = ["English", "French", "Arabic"];
 
 const AboutMe = () => {
   return (
     <section id="about" className="scroll-mt-24">
-      <div className="relative bg-softGray dark:bg-dark/50 py-16 md:py-28">
+      <div className="relative py-20 md:py-32">
         <div className="container">
-          <Reveal>
-            <div className="section-heading">
-              <h2>About Me</h2>
-              <p className="section-number">( 01 )</p>
-            </div>
-          </Reveal>
+          <SectionLabel number="01" eyebrow="About" title="A quick introduction." />
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
-            <Reveal direction="left" className="lg:col-span-2 space-y-6">
-              <p className="text-base md:text-lg text-secondary dark:text-gray-400 leading-relaxed">
-                Young, dynamic, and passionate web developer with a deep love for
-                computer science and new technologies. I specialize in creating
-                robust and scalable web applications using PHP and the Laravel
-                framework.
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+            <Reveal direction="left" className="lg:col-span-7 space-y-6">
+              <p className="text-lg md:text-xl text-dark dark:text-white leading-relaxed font-medium">
+                I&apos;m a backend-leaning full-stack developer focused on
+                <span className="text-primary"> shipping production systems </span>
+                that don&apos;t just work — they hold up under real users, real
+                data, and real deadlines.
               </p>
               <p className="text-base md:text-lg text-secondary dark:text-gray-400 leading-relaxed">
-                With a keen eye for detail and a commitment to delivering
-                high-quality code, I strive to build solutions that not only meet
-                but exceed client expectations. My experience spans from
-                e-commerce platforms to enterprise ERP systems.
+                Currently at <span className="text-dark dark:text-white font-medium">Whitebay Limited</span>, I design and maintain
+                Laravel applications with Livewire and Inertia, build RESTful APIs,
+                and integrate third-party services like Stripe and PrestaShop.
+                Before that, five years across e-commerce platforms, ERP systems,
+                and internal tools.
               </p>
-
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6">
-                {stats.map((stat, i) => (
-                  <div
-                    key={i}
-                    className="bg-white dark:bg-dark rounded-xl p-5 card-hover border border-mistGray dark:border-white/10"
-                  >
-                    <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center mb-3">
-                      <svg
-                        width="20"
-                        height="20"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="text-primary"
-                      >
-                        <path
-                          d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </div>
-                    <h3 className="text-3xl md:text-4xl font-bold text-primary mb-1">
-                      <AnimatedCounter target={stat.count} suffix={stat.suffix} />
-                    </h3>
-                    <p className="text-sm text-secondary dark:text-gray-400">{stat.label}</p>
-                  </div>
-                ))}
-              </div>
+              <p className="text-base md:text-lg text-secondary dark:text-gray-400 leading-relaxed">
+                I care about clean data models, predictable APIs, and code that
+                a future me (or a teammate) can read without grimacing. Outside
+                work, I tinker with side projects and keep up with the React /
+                Next.js side of the world.
+              </p>
             </Reveal>
 
-            <Reveal direction="right" className="space-y-6">
-              <div className="bg-white dark:bg-dark rounded-xl p-6 border border-mistGray dark:border-white/10">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                    <svg
-                      width="20"
-                      height="20"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="text-primary"
+            <Reveal direction="right" className="lg:col-span-5">
+              <div className="rounded-2xl border border-mistGray/60 dark:border-white/10 bg-white/40 dark:bg-white/[0.02] backdrop-blur-sm p-6 md:p-8">
+                <p className="mono text-xs uppercase tracking-wider text-secondary dark:text-gray-500 mb-6">
+                  Quick facts
+                </p>
+                <dl className="divide-y divide-mistGray/60 dark:divide-white/10">
+                  {facts.map((f) => (
+                    <div
+                      key={f.label}
+                      className="flex items-baseline justify-between py-3.5"
                     >
-                      <path
-                        d="M5 8l6 6M4 14l6-6 8 8"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </div>
-                  <h5 className="text-lg font-semibold text-dark dark:text-white">Languages</h5>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {languages.map((lang) => (
-                    <span
-                      key={lang}
-                      className="bg-softGray dark:bg-white/5 py-2 px-4 rounded-full text-sm font-medium text-dark dark:text-white"
-                    >
-                      {lang}
-                    </span>
+                      <dt className="text-sm text-secondary dark:text-gray-400">
+                        {f.label}
+                      </dt>
+                      <dd className="text-sm font-medium text-dark dark:text-white text-right">
+                        {f.value}
+                      </dd>
+                    </div>
                   ))}
-                </div>
-              </div>
-
-              <div className="hidden lg:block relative rounded-xl overflow-hidden h-[200px]">
-                <Image
-                  src={getImgPath("/images/home/about-me/about-banner-img.svg")}
-                  alt="decorative"
-                  width={303}
-                  height={200}
-                  className="w-full h-full object-cover"
-                  loading="lazy"
-                />
+                </dl>
               </div>
             </Reveal>
           </div>

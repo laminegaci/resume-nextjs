@@ -15,6 +15,7 @@ const navLinks = [
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState<string>("");
   const mobileMenuRef = useRef<HTMLDivElement>(null);
   const firstButtonRef = useRef<HTMLButtonElement>(null);
 
@@ -24,6 +25,27 @@ const Header = () => {
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const sections = navLinks
+      .map((l) => document.querySelector(l.href))
+      .filter((el): el is Element => el !== null);
+    if (sections.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(`#${entry.target.id}`);
+          }
+        });
+      },
+      { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
+    );
+
+    sections.forEach((s) => observer.observe(s));
+    return () => observer.disconnect();
   }, []);
 
   const trapFocus = useCallback((e: KeyboardEvent) => {
@@ -98,16 +120,28 @@ const Header = () => {
           <div className="flex items-center justify-between">
             <Logo />
 
-            <div className="hidden md:flex items-center gap-8">
-              {navLinks.map((link) => (
-                <button
-                  key={link.href}
-                  onClick={() => handleNavClick(link.href)}
-                  className="nav-link"
-                >
-                  {link.label}
-                </button>
-              ))}
+            <div className="hidden md:flex items-center gap-7">
+              {navLinks.map((link) => {
+                const isActive = activeSection === link.href;
+                return (
+                  <button
+                    key={link.href}
+                    onClick={() => handleNavClick(link.href)}
+                    className={`nav-link inline-flex items-center gap-1.5 ${
+                      isActive ? "!text-dark dark:!text-white" : ""
+                    }`}
+                    aria-current={isActive ? "true" : undefined}
+                  >
+                    {isActive && (
+                      <span
+                        className="w-1.5 h-1.5 rounded-full bg-primary"
+                        aria-hidden
+                      />
+                    )}
+                    {link.label}
+                  </button>
+                );
+              })}
             </div>
 
             <div className="flex items-center gap-3">
@@ -117,7 +151,7 @@ const Header = () => {
                 onClick={handleDownloadPDF}
                 className="btn-primary hidden sm:block"
               >
-                <span className="text-sm md:text-base text-black group-hover:text-white">
+                <span className="text-sm md:text-base text-dark dark:text-white group-hover:text-white">
                   Download CV
                 </span>
               </button>
@@ -182,7 +216,7 @@ const Header = () => {
             onClick={handleDownloadPDF}
             className="btn-primary mt-4"
           >
-            <span className="text-lg text-black group-hover:text-white">
+            <span className="text-lg text-dark dark:text-white group-hover:text-white">
               Download CV
             </span>
           </button>

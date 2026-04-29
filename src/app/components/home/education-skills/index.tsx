@@ -4,6 +4,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import type { EducationData, Skill } from "@/app/types/portfolio";
 import Reveal from "@/app/components/ui/reveal";
+import SectionLabel from "@/app/components/ui/section-label";
 
 const skills: Skill[] = [
   { name: "HTML5", icon: "/images/icon/html.svg", category: "frontend" },
@@ -67,43 +68,45 @@ const EducationSkills = () => {
 
   return (
     <section id="skills" className="scroll-mt-24">
-      <div className="border-t border-softGray dark:border-white/10 py-16 md:py-28">
+      <div className="border-t border-mistGray/60 dark:border-white/10 py-20 md:py-32">
         <div className="container">
-          <Reveal>
-            <div className="section-heading">
-              <h2>Tech Stack</h2>
-              <p className="section-number">( 03 )</p>
-            </div>
-          </Reveal>
+          <SectionLabel number="03" eyebrow="Toolbox" title="What I reach for." />
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-16">
             <div className="lg:col-span-2">
-              <div className="space-y-8">
+              <div className="space-y-10">
                 {Object.entries(groupedSkills).map(([category, categorySkills], idx) => (
-                  <Reveal key={category} delay={idx * 0.1}>
+                  <Reveal key={category} delay={idx * 0.08}>
                     <div>
-                      <h5 className="text-base font-semibold text-dark dark:text-white mb-4 uppercase tracking-wider">
-                        {categoryLabels[category]}
-                      </h5>
-                      <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
+                      <div className="flex items-center gap-3 mb-5">
+                        <span className="mono text-[11px] uppercase tracking-wider text-primary">
+                          0{idx + 1}
+                        </span>
+                        <h5 className="text-base font-semibold text-dark dark:text-white">
+                          {categoryLabels[category]}
+                        </h5>
+                        <span className="flex-1 h-px bg-mistGray/60 dark:bg-white/10" />
+                        <span className="mono text-[11px] text-secondary/70 dark:text-gray-500">
+                          {categorySkills.length}
+                        </span>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
                         {categorySkills.map((skill) => (
                           <div
                             key={skill.name}
-                            className="group flex flex-col items-center text-center card-hover"
+                            className="group inline-flex items-center gap-2 px-3 py-2 rounded-full border border-mistGray/60 dark:border-white/10 bg-white/40 dark:bg-white/[0.02] hover:border-primary/40 hover:bg-primary/[0.04] transition-all duration-300"
                           >
-                            <div className="p-4 bg-white dark:bg-dark rounded-xl shadow-sm border border-mistGray dark:border-white/10 group-hover:border-primary/30 group-hover:shadow-md transition-all">
-                              <Image
-                                src={getImgPath(skill.icon)}
-                                alt={skill.name}
-                                width={40}
-                                height={40}
-                                className="object-contain group-hover:scale-110 transition-transform duration-300"
-                                loading="lazy"
-                              />
-                            </div>
-                            <p className="mt-2 text-xs font-medium text-secondary dark:text-gray-400 group-hover:text-primary transition-colors">
+                            <Image
+                              src={getImgPath(skill.icon)}
+                              alt=""
+                              width={16}
+                              height={16}
+                              className="object-contain"
+                              loading="lazy"
+                            />
+                            <span className="text-sm font-medium text-dark dark:text-white group-hover:text-primary transition-colors">
                               {skill.name}
-                            </p>
+                            </span>
                           </div>
                         ))}
                       </div>
@@ -114,8 +117,10 @@ const EducationSkills = () => {
             </div>
 
             <Reveal direction="right" className="space-y-6">
-              <div className="bg-softGray dark:bg-dark/50 rounded-xl p-6">
-                <h5 className="text-lg font-semibold text-dark dark:text-white mb-4">Education</h5>
+              <div className="rounded-2xl border border-mistGray/60 dark:border-white/10 bg-white/40 dark:bg-white/[0.02] backdrop-blur-sm p-6 md:p-8">
+                <p className="mono text-xs uppercase tracking-wider text-secondary dark:text-gray-500 mb-5">
+                  Education
+                </p>
                 {loading ? (
                   <div className="space-y-4">
                     {[1, 2].map((i) => (

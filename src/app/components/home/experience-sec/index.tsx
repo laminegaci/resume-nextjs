@@ -1,4 +1,6 @@
 import type { Experience } from "@/app/types/portfolio";
+import SectionLabel from "@/app/components/ui/section-label";
+import Reveal from "@/app/components/ui/reveal";
 
 const experiences: Experience[] = [
   {
@@ -42,78 +44,47 @@ const experiences: Experience[] = [
 const ExperienceSec = () => {
   return (
     <section id="experience" className="scroll-mt-24">
-      <div className="py-16 md:py-28">
+      <div className="border-t border-mistGray/60 dark:border-white/10 py-20 md:py-32">
         <div className="container">
-          <div className="section-heading">
-            <h2>Experience</h2>
-            <p className="section-number">( 02 )</p>
-          </div>
+          <SectionLabel number="02" eyebrow="Experience" title="Where I've been working." />
 
-          <div className="relative">
-            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-mistGray transform md:-translate-x-px" />
-
-            <div className="space-y-8 md:space-y-12">
-              {experiences.map((exp, index) => (
-                <div
-                  key={index}
-                  className={`relative grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 ${
-                    index % 2 === 0 ? "md:pr-12" : "md:pl-12"
-                  }`}
-                >
-                  <div
-                    className={`hidden md:flex absolute left-4 md:left-1/2 top-0 transform -translate-x-1/2 z-10`}
-                  >
-                    <div
-                      className={`w-4 h-4 rounded-full border-2 bg-white flex items-center justify-center ${
-                        exp.isCurrent
-                          ? "border-primary shadow-lg shadow-primary/30"
-                          : "border-mistGray"
-                      }`}
-                    >
-                      {exp.isCurrent && (
-                        <div className="w-2 h-2 rounded-full bg-primary" />
-                      )}
-                    </div>
-                  </div>
-
-                  <div
-                    className={`card-hover bg-white dark:bg-dark rounded-xl p-6 border ${
-                      exp.isCurrent
-                        ? "border-primary/30 shadow-lg shadow-primary/10"
-                        : "border-mistGray dark:border-white/10"
-                    }`}
-                  >
-                    <div className="flex flex-wrap items-center gap-3 mb-3">
-                      <span
-                        className={`text-sm font-mono font-semibold px-3 py-1 rounded-full ${
-                          exp.isCurrent
-                            ? "bg-primary/10 text-primary"
-                            : "bg-softGray dark:bg-white/5 text-secondary dark:text-gray-400"
-                        }`}
-                      >
+          <ol className="relative">
+            {experiences
+              .slice()
+              .reverse()
+              .map((exp, index) => (
+                <Reveal key={index} delay={index * 0.06}>
+                  <li className="group relative grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-6 md:py-8 border-t border-mistGray/60 dark:border-white/10 transition-colors hover:bg-softGray/40 dark:hover:bg-white/[0.02] rounded-lg px-2 md:px-4 -mx-2 md:-mx-4">
+                    <div className="md:col-span-3 flex items-center gap-3">
+                      <span className="mono text-xs uppercase tracking-wider text-secondary dark:text-gray-500">
                         {exp.year}
                       </span>
-                      <span className="text-xs text-secondary dark:text-gray-400">{exp.type}</span>
+                      {exp.isCurrent && (
+                        <span className="chip mono !text-[10px] !px-2 !py-0.5 !text-emerald-600 dark:!text-emerald-400 border-emerald-500/30">
+                          Current
+                        </span>
+                      )}
                     </div>
 
-                    <h5 className="text-lg md:text-xl font-semibold text-dark mb-2">
-                      {exp.title}
-                    </h5>
-
-                    <p className="text-sm font-medium text-primary mb-3">
-                      {exp.company}
-                    </p>
-
-                    <p className="text-sm text-secondary dark:text-gray-400 leading-relaxed">
-                      {exp.description}
-                    </p>
-                  </div>
-
-                  <div className="hidden md:block" />
-                </div>
+                    <div className="md:col-span-9">
+                      <h5 className="text-xl md:text-2xl font-semibold text-dark dark:text-white mb-1 group-hover:text-primary transition-colors">
+                        {exp.title}{" "}
+                        <span className="text-secondary dark:text-gray-500 font-normal">
+                          · {exp.company}
+                        </span>
+                      </h5>
+                      <p className="mono text-[11px] uppercase tracking-wider text-secondary/80 dark:text-gray-500 mb-3">
+                        {exp.type}
+                      </p>
+                      <p className="text-sm md:text-base text-secondary dark:text-gray-400 leading-relaxed max-w-3xl">
+                        {exp.description}
+                      </p>
+                    </div>
+                  </li>
+                </Reveal>
               ))}
-            </div>
-          </div>
+            <li className="border-t border-mistGray/60 dark:border-white/10" aria-hidden />
+          </ol>
         </div>
       </div>
     </section>

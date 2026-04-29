@@ -1,22 +1,14 @@
 "use client";
-import { getDataPath, getImgPath } from "@/utils/image";
-import Image from "next/image";
+import { getDataPath } from "@/utils/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import type { ContactLinksData, SocialLink, ContactInfo, FormData } from "@/app/types/portfolio";
+import type { ContactLinksData, SocialLink, ContactInfo } from "@/app/types/portfolio";
+import SectionLabel from "@/app/components/ui/section-label";
+
+const EMAIL = "mohamed61lamine@gmail.com";
 
 const Contact = () => {
   const [contactData, setContactData] = useState<ContactLinksData | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [submitted, setSubmitted] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [formError, setFormError] = useState("");
-  const [formData, setFormData] = useState<FormData>({
-    name: "",
-    number: "",
-    email: "",
-    message: "",
-  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -27,262 +19,99 @@ const Contact = () => {
         setContactData(data?.contactLinks);
       } catch (error) {
         console.error("Error fetching contact data:", error);
-      } finally {
-        setLoading(false);
       }
     };
-
     fetchData();
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+  const handleDownloadPDF = () => {
+    const link = document.createElement("a");
+    link.href = "/files/resume.pdf";
+    link.download = "Mohamed_Lamine_Resume.pdf";
+    link.click();
   };
-
-  const validateForm = (): boolean => {
-    if (!formData.name.trim()) {
-      setFormError("Name is required");
-      return false;
-    }
-    if (!formData.email.trim()) {
-      setFormError("Email is required");
-      return false;
-    }
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(formData.email)) {
-      setFormError("Please enter a valid email");
-      return false;
-    }
-    if (!formData.message.trim()) {
-      setFormError("Message is required");
-      return false;
-    }
-    setFormError("");
-    return true;
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormError("");
-
-    if (!validateForm()) return;
-
-    setSubmitting(true);
-
-    try {
-      const response = await fetch("https://formsubmit.co/ajax/mohamed61lamine@gmail.com", {
-        method: "POST",
-        headers: { "Content-type": "application/json" },
-        body: JSON.stringify({
-          name: formData.name,
-          number: formData.number,
-          email: formData.email,
-          message: formData.message,
-        }),
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        setSubmitted(true);
-        setFormData({ name: "", number: "", email: "", message: "" });
-        setTimeout(() => setSubmitted(false), 5000);
-      } else {
-        setFormError("Failed to send message. Please try again.");
-      }
-    } catch {
-      setFormError("Failed to send message. Please try again.");
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  if (loading) {
-    return (
-      <section id="contact" className="scroll-mt-24">
-        <div className="container py-16 md:py-28">
-            <div className="section-heading">
-              <h2>Contact Me</h2>
-              <p className="section-number">( 05 )</p>
-            </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
-            <div className="space-y-8">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="h-12 bg-softGray rounded animate-pulse" />
-              ))}
-            </div>
-            <div className="space-y-6">
-              <div className="h-10 bg-softGray rounded animate-pulse" />
-              <div className="h-24 bg-softGray rounded animate-pulse" />
-            </div>
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section id="contact" className="scroll-mt-24">
-      <div className="container py-16 md:py-28">
-        <div className="section-heading">
-          <h2>Contact Me</h2>
-          <p className="section-number">( 05 )</p>
-        </div>
+      <div className="border-t border-mistGray/60 dark:border-white/10 py-24 md:py-40 relative overflow-hidden">
+        <div className="absolute inset-0 -z-10 accent-glow opacity-40" />
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
-          <div>
-            <h5 className="text-2xl md:text-3xl font-semibold text-dark mb-4">
-              Let&apos;s work together
-            </h5>
-            <p className="text-secondary mb-8 leading-relaxed">
-              Have a project in mind or want to discuss potential opportunities?
-              Feel free to reach out. I&apos;m always open to new challenges and
-              collaborations.
-            </p>
+        <div className="container relative">
+          <SectionLabel number="05" eyebrow="Contact" title="Let's build something." />
 
-            <div className="space-y-6 mb-8">
-              {contactData?.contactInfo?.map((info: ContactInfo, index: number) => (
-                <Link
-                  key={index}
-                  href={info.link}
-                  className="flex items-center gap-4 group"
-                >
-                  <div className="w-12 h-12 bg-softGray dark:bg-white/5 rounded-full flex items-center justify-center group-hover:bg-primary/10 transition-colors">
-                    <Image
-                      src={getImgPath(
-                        info.type === "email"
-                          ? "/images/icon/mail-icon.svg"
-                          : "/images/icon/call-icon.svg"
-                      )}
-                      alt={info.type}
-                      width={20}
-                      height={20}
-                    />
-                  </div>
-                  <div>
-                    <p className="text-xs text-secondary uppercase tracking-wider">
-                      {info.type}
-                    </p>
-                    <p className="text-base text-dark font-medium group-hover:text-primary transition-colors">
-                      {info.label}
-                    </p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-
-            <div className="flex flex-wrap gap-4">
-              {contactData?.socialLinks?.map((link: SocialLink, index: number) => (
-                <Link
-                  key={index}
-                  href={link.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-sm font-medium text-secondary hover:text-primary transition-colors border-b border-transparent hover:border-primary pb-1"
-                >
-                  {link.title}
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <form onSubmit={handleSubmit} className="space-y-8">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="name" className="label">
-                    Name *
-                  </label>
-                  <input
-                    required
-                    className="input"
-                    id="name"
-                    name="name"
-                    value={formData.name}
-                    onChange={handleChange}
-                    placeholder="Your name"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="number" className="label">
-                    Phone
-                  </label>
-                  <input
-                    className="input"
-                    id="number"
-                    type="tel"
-                    name="number"
-                    value={formData.number}
-                    onChange={handleChange}
-                    placeholder="Your phone"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label htmlFor="email" className="label">
-                  Email *
-                </label>
-                <input
-                  required
-                  className="input"
-                  id="email"
-                  type="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  placeholder="your@email.com"
-                />
-              </div>
-
-              <div>
-                <label htmlFor="message" className="label">
-                  Message *
-                </label>
-                <textarea
-                  required
-                  className="input resize-none"
-                  name="message"
-                  id="message"
-                  value={formData.message}
-                  onChange={handleChange}
-                  rows={4}
-                  placeholder="Tell me about your project..."
-                />
-              </div>
-
-              {formError && (
-                <p className="text-sm text-primary">{formError}</p>
-              )}
-
-              {submitted && (
-                <div className="flex items-center gap-3 p-4 bg-green-50 rounded-lg">
-                  <Image
-                    src={getImgPath("/images/icon/success-icon.svg")}
-                    alt="success"
-                    width={24}
-                    height={24}
-                  />
-                  <p className="text-sm text-green-700">
-                    Message sent successfully! I&apos;ll get back to you soon.
-                  </p>
-                </div>
-              )}
-
-              <button
-                type="submit"
-                disabled={submitting}
-                className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            <div className="lg:col-span-7">
+              <a
+                href={`mailto:${EMAIL}?subject=Hello%20Mohamed`}
+                className="group block"
               >
-                <span className="text-base text-black group-hover:text-white">
-                  {submitting ? "Sending..." : "Send Message"}
+                <p className="mono text-xs uppercase tracking-wider text-secondary dark:text-gray-500 mb-3">
+                  Drop me a line
+                </p>
+                <h3 className="display-tight text-[clamp(1.75rem,5vw,3.5rem)] font-semibold text-dark dark:text-white break-all sm:break-normal underline-offset-[10px] decoration-2 decoration-mistGray dark:decoration-white/20 hover:decoration-primary group-hover:text-primary transition-all">
+                  {EMAIL}
+                </h3>
+                <span className="inline-flex items-center gap-2 mt-5 mono text-xs uppercase tracking-wider text-primary opacity-0 group-hover:opacity-100 -translate-y-1 group-hover:translate-y-0 transition-all">
+                  Compose email <span aria-hidden>↗</span>
                 </span>
-              </button>
-            </form>
+              </a>
+
+              <p className="text-secondary dark:text-gray-400 max-w-xl mt-10 leading-relaxed">
+                Best for project inquiries, collaboration, or roles. I usually
+                reply within a day or two. If it&apos;s urgent, ping me on
+                LinkedIn.
+              </p>
+
+              <div className="flex flex-wrap items-center gap-3 mt-8">
+                <button onClick={handleDownloadPDF} className="btn-primary">
+                  <span className="text-base text-dark dark:text-white group-hover:text-white">
+                    Download résumé →
+                  </span>
+                </button>
+                {contactData?.contactInfo
+                  ?.find((i: ContactInfo) => i.type === "phone")
+                  ?.link && (
+                  <Link
+                    href={
+                      contactData.contactInfo.find(
+                        (i: ContactInfo) => i.type === "phone"
+                      )!.link
+                    }
+                    className="text-base font-medium text-dark dark:text-white underline-offset-4 hover:underline decoration-primary decoration-2"
+                  >
+                    Or call directly
+                  </Link>
+                )}
+              </div>
+            </div>
+
+            <div className="lg:col-span-5">
+              <div className="rounded-2xl border border-mistGray/60 dark:border-white/10 bg-white/40 dark:bg-white/[0.02] backdrop-blur-sm p-6 md:p-8">
+                <p className="mono text-xs uppercase tracking-wider text-secondary dark:text-gray-500 mb-5">
+                  Find me online
+                </p>
+                <ul className="divide-y divide-mistGray/60 dark:divide-white/10">
+                  {contactData?.socialLinks?.map((link: SocialLink) => (
+                    <li key={link.title}>
+                      <Link
+                        href={link.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-center justify-between py-4 text-dark dark:text-white hover:text-primary transition-colors"
+                      >
+                        <span className="font-medium">{link.title}</span>
+                        <span
+                          className="mono text-xs text-secondary dark:text-gray-500 group-hover:text-primary group-hover:translate-x-1 transition-all"
+                          aria-hidden
+                        >
+                          →
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
