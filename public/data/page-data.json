@@ -5,13 +5,13 @@
         "type": "email",
         "label": "mohamed61lamine@gmail.com",
         "icon": "/images/icon/mail-icon.svg",
-        "link": "mailto:hello@imsruthi.com"
+        "link": "mailto:mohamed61lamine@gmail.com"
       },
       {
         "type": "phone",
         "label": "+213 792 375 039",
         "icon": "/images/icon/call-icon.svg",
-        "link": "tel:+90155882500"
+        "link": "tel:+213792375039"
       }
     ],
     "socialItems": [
@@ -35,76 +35,72 @@
   "educationData": {
     "education": [
       {
-        "title": "Lipsum Collage - 2010",
-        "description": "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form Koramangala collage."
+        "title": "Bachelor's in Computer Science",
+        "description": "Foundation in software engineering, algorithms, and web development technologies."
       },
       {
-        "title": "Master Diploma - 2012",
-        "description": "Combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable."
-      },
-      {
-        "title": "Master in User Experience - 2014",
-        "description": "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration."
+        "title": "Professional Web Development Certification",
+        "description": "Specialized training in modern web frameworks, PHP/Laravel ecosystem, and full-stack development."
       }
     ],
     "skills": [
       {
-        "name": "Figma",
-        "icon": "/images/home/education-skill/figma-icon.svg",
+        "name": "HTML5",
+        "icon": "/images/icon/html.svg",
         "rating": 5
       },
       {
-        "name": "Photoshop",
-        "icon": "/images/home/education-skill/photoshop-icon.svg",
+        "name": "CSS3",
+        "icon": "/images/icon/css.svg",
         "rating": 5
       },
       {
-        "name": "Sketch",
-        "icon": "/images/home/education-skill/sketch-icon.svg",
+        "name": "JavaScript",
+        "icon": "/images/icon/javascript.svg",
+        "rating": 5
+      },
+      {
+        "name": "TypeScript",
+        "icon": "/images/icon/typescript.svg",
         "rating": 4
       },
       {
-        "name": "Adobe XD",
-        "icon": "/images/home/education-skill/adobe-icon.svg",
-        "rating": 4
-      },
-      {
-        "name": "Framer",
-        "icon": "/images/home/education-skill/framer-icon.svg",
+        "name": "PHP",
+        "icon": "/images/icon/php.svg",
         "rating": 5
       },
       {
-        "name": "Invasion",
-        "icon": "/images/home/education-skill/invision-icon.svg",
-        "rating": 3
+        "name": "Laravel",
+        "icon": "/images/icon/laravel.svg",
+        "rating": 5
       }
     ]
   },
   "contactLinks": {
     "socialLinks": [
       {
-        "title": "Dribble",
-        "href": "/"
-      },
-      {
-        "title": "Facebook",
-        "href": "/"
+        "title": "GitHub",
+        "href": "https://github.com/laminegaci"
       },
       {
         "title": "LinkedIn",
-        "href": "/"
+        "href": "https://www.linkedin.com/in/mohamed-lamine-gaci-183650201/"
+      },
+      {
+        "title": "Facebook",
+        "href": "https://www.facebook.com/mohamed.lamine.dev"
       }
     ],
     "contactInfo": [
       {
         "type": "email",
-        "label": "hello@imsruthi.com",
-        "link": "mailto:hello@imsruthi.com"
+        "label": "mohamed61lamine@gmail.com",
+        "link": "mailto:mohamed61lamine@gmail.com"
       },
       {
         "type": "phone",
-        "label": "+901 5588 2500",
-        "link": "tel:+90155882500"
+        "label": "+213 792 375 039",
+        "link": "tel:+213792375039"
       }
     ]
   }

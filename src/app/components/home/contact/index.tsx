@@ -3,11 +3,15 @@ import { getDataPath, getImgPath } from "@/utils/image";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import type { ContactLinksData, SocialLink, ContactInfo, FormData } from "@/app/types/portfolio";
 
 const Contact = () => {
-  const [contactData, setContactData] = useState<any>(null);
+  const [contactData, setContactData] = useState<ContactLinksData | null>(null);
+  const [loading, setLoading] = useState(true);
   const [submitted, setSubmitted] = useState(false);
-  const [formData, setFormData] = useState({
+  const [submitting, setSubmitting] = useState(false);
+  const [formError, setFormError] = useState("");
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     number: "",
     email: "",
@@ -22,43 +26,16 @@ const Contact = () => {
         const data = await res.json();
         setContactData(data?.contactLinks);
       } catch (error) {
-        console.error("Error fetching services:", error);
+        console.error("Error fetching contact data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
-  const reset = () => {
-    formData.name = "";
-    formData.number = "";
-    formData.email = "";
-    formData.message = "";
-  };
-
-  const handleSubmit = async (e: any) => {
-    e.preventDefault();
-
-    fetch("https://formsubmit.co/ajax/bhainirav772@gmail.com", {
-      method: "POST",
-      headers: { "Content-type": "application/json" },
-      body: JSON.stringify({
-        name: formData.name,
-        number: formData.number,
-        email: formData.email,
-        message: formData.message,
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setSubmitted(data.success);
-        reset();
-      })
-      .catch((error) => {
-        console.log(error.message);
-      });
-  };
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -66,130 +43,246 @@ const Contact = () => {
     }));
   };
 
-  return (
-    <section className="no-print">
-      <div className="container">
-        <div className="pt-16 md:pt-32 pb-20">
-          <div className="flex items-center justify-between gap-2 border-b border-black pb-7 mb-9 md:mb-16">
+  const validateForm = (): boolean => {
+    if (!formData.name.trim()) {
+      setFormError("Name is required");
+      return false;
+    }
+    if (!formData.email.trim()) {
+      setFormError("Email is required");
+      return false;
+    }
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      setFormError("Please enter a valid email");
+      return false;
+    }
+    if (!formData.message.trim()) {
+      setFormError("Message is required");
+      return false;
+    }
+    setFormError("");
+    return true;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setFormError("");
+
+    if (!validateForm()) return;
+
+    setSubmitting(true);
+
+    try {
+      const response = await fetch("https://formsubmit.co/ajax/mohamed61lamine@gmail.com", {
+        method: "POST",
+        headers: { "Content-type": "application/json" },
+        body: JSON.stringify({
+          name: formData.name,
+          number: formData.number,
+          email: formData.email,
+          message: formData.message,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setSubmitted(true);
+        setFormData({ name: "", number: "", email: "", message: "" });
+        setTimeout(() => setSubmitted(false), 5000);
+      } else {
+        setFormError("Failed to send message. Please try again.");
+      }
+    } catch {
+      setFormError("Failed to send message. Please try again.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (loading) {
+    return (
+      <section id="contact" className="scroll-mt-24">
+        <div className="container py-16 md:py-28">
+          <div className="section-heading">
             <h2>Contact Me</h2>
-            <p className="text-xl text-orange-500">( 05 )</p>
+            <p className="section-number"></p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <form onSubmit={handleSubmit}>
-              <div className="flex flex-col gap-7 sm:gap-12">
-                <div className="grid grid-cols-2 gap-8">
-                  <div>
-                    <label htmlFor="name" className="label">
-                      Name *
-                    </label>
-                    <input
-                      required
-                      className="input"
-                      id="name"
-                      name="name"
-                      value={formData.name}
-                      onChange={handleChange}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="space-y-8">
+              {[1, 2, 3].map((i) => (
+                <div key={i} className="h-12 bg-softGray rounded animate-pulse" />
+              ))}
+            </div>
+            <div className="space-y-6">
+              <div className="h-10 bg-softGray rounded animate-pulse" />
+              <div className="h-24 bg-softGray rounded animate-pulse" />
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section id="contact" className="scroll-mt-24">
+      <div className="container py-16 md:py-28">
+        <div className="section-heading">
+          <h2>Contact Me</h2>
+          <p className="section-number"></p>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16">
+          <div>
+            <h5 className="text-2xl md:text-3xl font-semibold text-dark mb-4">
+              Let&apos;s work together
+            </h5>
+            <p className="text-secondary mb-8 leading-relaxed">
+              Have a project in mind or want to discuss potential opportunities?
+              Feel free to reach out. I&apos;m always open to new challenges and
+              collaborations.
+            </p>
+
+            <div className="space-y-6 mb-8">
+              {contactData?.contactInfo?.map((info: ContactInfo, index: number) => (
+                <Link
+                  key={index}
+                  href={info.link}
+                  className="flex items-center gap-4 group"
+                >
+                  <div className="w-12 h-12 bg-softGray rounded-full flex items-center justify-center group-hover:bg-primary/10 transition-colors">
+                    <Image
+                      src={getImgPath(
+                        info.type === "email"
+                          ? "/images/icon/mail-icon.svg"
+                          : "/images/icon/call-icon.svg"
+                      )}
+                      alt={info.type}
+                      width={20}
+                      height={20}
                     />
                   </div>
                   <div>
-                    <label htmlFor="number" className="label">
-                      Phone *
-                    </label>
-                    <input
-                      required
-                      className="input"
-                      id="number"
-                      type="number"
-                      name="number"
-                      value={formData.number}
-                      onChange={handleChange}
-                    />
+                    <p className="text-xs text-secondary uppercase tracking-wider">
+                      {info.type}
+                    </p>
+                    <p className="text-base text-dark font-medium group-hover:text-primary transition-colors">
+                      {info.label}
+                    </p>
                   </div>
-                </div>
+                </Link>
+              ))}
+            </div>
+
+            <div className="flex flex-wrap gap-4">
+              {contactData?.socialLinks?.map((link: SocialLink, index: number) => (
+                <Link
+                  key={index}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-sm font-medium text-secondary hover:text-primary transition-colors border-b border-transparent hover:border-primary pb-1"
+                >
+                  {link.title}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div>
-                  <label htmlFor="email" className="label">
-                    Email *
+                  <label htmlFor="name" className="label">
+                    Name *
                   </label>
                   <input
                     required
                     className="input"
-                    id="email"
-                    type="email"
-                    name="email"
-                    value={formData.email}
+                    id="name"
+                    name="name"
+                    value={formData.name}
                     onChange={handleChange}
+                    placeholder="Your name"
                   />
                 </div>
                 <div>
-                  <label htmlFor="message" className="label">
-                    Message *
+                  <label htmlFor="number" className="label">
+                    Phone
                   </label>
-                  <textarea
-                    required
+                  <input
                     className="input"
-                    name="message"
-                    id="message"
-                    value={formData.message}
+                    id="number"
+                    type="tel"
+                    name="number"
+                    value={formData.number}
                     onChange={handleChange}
-                    rows={2}
+                    placeholder="Your phone"
                   />
                 </div>
-                {submitted && (
-                  <div className="flex items-center gap-2">
-                    <Image
-                      src={getImgPath("/images/icon/success-icon.svg")}
-                      alt="success-icon"
-                      width={30}
-                      height={30}
-                    />
-                    <p className="text-secondary">
-                      Great!!! Email has been Successfully Sent. We will get in
-                      touch asap.
-                    </p>
-                  </div>
-                )}
-                <button
-                  type="submit"
-                  className="relative overflow-hidden cursor-pointer w-fit py-2 sm:py-3 md:py-5 px-4 sm:px-5 md:px-7 border border-primary rounded-full group"
-                >
-                  <span className="relative z-10 text-xl font-medium text-primary group-hover:text-white transition-colors duration-300">
-                    Send Now
-                  </span>
-                </button>
               </div>
+
+              <div>
+                <label htmlFor="email" className="label">
+                  Email *
+                </label>
+                <input
+                  required
+                  className="input"
+                  id="email"
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="your@email.com"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="message" className="label">
+                  Message *
+                </label>
+                <textarea
+                  required
+                  className="input resize-none"
+                  name="message"
+                  id="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  rows={4}
+                  placeholder="Tell me about your project..."
+                />
+              </div>
+
+              {formError && (
+                <p className="text-sm text-primary">{formError}</p>
+              )}
+
+              {submitted && (
+                <div className="flex items-center gap-3 p-4 bg-green-50 rounded-lg">
+                  <Image
+                    src={getImgPath("/images/icon/success-icon.svg")}
+                    alt="success"
+                    width={24}
+                    height={24}
+                  />
+                  <p className="text-sm text-green-700">
+                    Message sent successfully! I&apos;ll get back to you soon.
+                  </p>
+                </div>
+              )}
+
+              <button
+                type="submit"
+                disabled={submitting}
+                className="btn-primary disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <span className="text-base text-black group-hover:text-white">
+                  {submitting ? "Sending..." : "Send Message"}
+                </span>
+              </button>
             </form>
-            <div className="flex flex-col sm:flex-row md:flex-col justify-between gap-5 md:gap-20 items-center md:items-end">
-              <div className="flex flex-wrap flex-row md:flex-col items-start md:items-end gap-4 md:gap-6">
-                {contactData?.socialLinks?.map((value: any, index: any) => {
-                  return (
-                    <div key={index}>
-                      <Link
-                        className="text-base sm:text-lg font-normal text-secondary hover:text-primary"
-                        onClick={(e) => e.preventDefault()}
-                        href={"#!"}
-                      >
-                        {value?.title}
-                      </Link>
-                    </div>
-                  );
-                })}
-              </div>
-              <div className="flex flex-wrap justify-center gap-5 lg:gap-11 items-end">
-                {contactData?.contactInfo?.map((value: any, index: any) => {
-                  return (
-                    <div key={index}>
-                      <Link
-                        onClick={(e) => e.preventDefault()}
-                        href={"#!"}
-                        className="text-base lg:text-lg text-black font-normal border-b border-black pb-3 hover:text-primary hover:border-primary"
-                      >
-                        {value?.label}
-                      </Link>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
           </div>
         </div>
       </div>

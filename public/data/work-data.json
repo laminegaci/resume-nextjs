@@ -4,55 +4,82 @@
       "image": "/images/work/site-web-india.png",
       "title": "Site E-commerce",
       "client": "India Mahdavi",
-      "slug": "site-web-india-mahdavi"
+      "slug": "site-web-india-mahdavi",
+      "link": "#",
+      "tags": ["Laravel", "E-commerce", "PHP"],
+      "description": "Full-featured e-commerce platform with product management, cart, and payment integration."
     },
     {
       "image": "/images/work/erp-india.png",
       "title": "ERP System",
       "client": "India Mahdavi",
-      "slug": "erp-india-mahdavi"
+      "slug": "erp-india-mahdavi",
+      "link": "#",
+      "tags": ["Laravel", "ERP", "MySQL"],
+      "description": "Enterprise resource planning system for inventory, orders, and business operations management."
     },
     {
       "image": "/images/work/at.png",
       "title": "Web App for AT Management",
       "client": "BA",
-      "slug": "at-management"
+      "slug": "at-management",
+      "link": "#",
+      "tags": ["PHP", "Laravel", "Web App"],
+      "description": "Custom web application for managing AT services and workflows."
     },
     {
       "image": "/images/work/henkel.png",
       "title": "Web Application",
       "client": "Henkel",
-      "slug": "web-application-for-group-henkel"
+      "slug": "web-application-for-group-henkel",
+      "link": "#",
+      "tags": ["Laravel", "Livewire", "Inertia.js"],
+      "description": "Scalable web application built with modern Laravel stack for enterprise client."
     },
     {
       "image": "/images/work/allo.png",
-      "title": "Allo khedma",
-      "client": "",
-      "slug": "allo-khedma"
+      "title": "Allo Khedma",
+      "client": "Personal Project",
+      "slug": "allo-khedma",
+      "link": "#",
+      "tags": ["Laravel", "Services", "PHP"],
+      "description": "Service marketplace platform connecting professionals with clients."
     },
     {
       "image": "/images/work/hanooty.png",
       "title": "Hanooty",
-      "client": "",
-      "slug": "hanooty"
+      "client": "Personal Project",
+      "slug": "hanooty",
+      "link": "#",
+      "tags": ["Laravel", "E-commerce", "Retail"],
+      "description": "Retail management and e-commerce solution for local businesses."
     },
     {
       "image": "/images/work/adi.png",
       "title": "ADI Performance",
-      "client": "",
-      "slug": "adi-performance"
+      "client": "ADI",
+      "slug": "adi-performance",
+      "link": "#",
+      "tags": ["PHP", "Laravel", "Dashboard"],
+      "description": "Performance tracking and analytics dashboard for business metrics."
     },
     {
       "image": "/images/work/khidmapub.jpg",
       "title": "Khidma Pub Public Website",
-      "client": "Photographer",
-      "slug": "khidma-pub-public-website"
+      "client": "Khidma Pub",
+      "slug": "khidma-pub-public-website",
+      "link": "#",
+      "tags": ["Laravel", "CMS", "Website"],
+      "description": "Public-facing website with content management and service showcase."
     },
     {
       "image": "/images/work/edisoft.png",
-      "title": "Web Application for Customer Management",
+      "title": "Customer Management System",
       "client": "Edisoft",
-      "slug": "web-application-for-customer-management"
+      "slug": "web-application-for-customer-management",
+      "link": "#",
+      "tags": ["PHP", "CRM", "Database"],
+      "description": "Customer relationship management web application for client tracking and support."
     }
   ]
 }

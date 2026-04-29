@@ -1,84 +1,86 @@
 import { getImgPath } from "@/utils/image";
 import Image from "next/image";
 
+const stats = [
+  { count: "5+", label: "Years of Experience", icon: "⚡" },
+  { count: "5+", label: "Happy Clients", icon: "😊" },
+  { count: "8+", label: "Projects Completed", icon: "🚀" },
+];
+
+const languages = ["English", "French", "Arabic"];
+
 const AboutMe = () => {
   return (
-    <section>
-      <div className="relative bg-softGray py-10 md:py-32">
-        <div className="absolute top-0 w-full px-9">
-          <Image
-            src={getImgPath("/images/home/about-me/resume-bg-img.svg")}
-            alt="resume-bg-img"
-            width={1200}
-            height={348}
-            className="w-full"
-          />
-        </div>
+    <section id="about" className="scroll-mt-24">
+      <div className="relative bg-softGray py-16 md:py-28">
+        <div className="container">
+          <div className="section-heading">
+            <h2>About Me</h2>
+            <p className="section-number">( 01 )</p>
+          </div>
 
-        <div className="relative z-10">
-          <div className="container">
-            <div className="flex items-center justify-between gap-2 border-b border-black pb-7">
-              <h2>About Me</h2>
-              <p className="text-xl text-primary">( 01 )</p>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12 items-start">
+            <div className="lg:col-span-2 space-y-6">
+              <p className="text-base md:text-lg text-secondary leading-relaxed">
+                Young, dynamic, and passionate web developer with a deep love for
+                computer science and new technologies. I specialize in creating
+                robust and scalable web applications using PHP and the Laravel
+                framework.
+              </p>
+              <p className="text-base md:text-lg text-secondary leading-relaxed">
+                With a keen eye for detail and a commitment to delivering
+                high-quality code, I strive to build solutions that not only meet
+                but exceed client expectations. My experience spans from
+                e-commerce platforms to enterprise ERP systems.
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-6">
+                {stats.map((stat, i) => (
+                  <div
+                    key={i}
+                    className="bg-white rounded-xl p-5 card-hover border border-mistGray"
+                  >
+                    <span className="text-2xl mb-2 block">{stat.icon}</span>
+                    <h3 className="text-3xl md:text-4xl font-bold text-primary mb-1">
+                      {stat.count}
+                    </h3>
+                    <p className="text-sm text-secondary">{stat.label}</p>
+                  </div>
+                ))}
+              </div>
             </div>
 
-            <div className="pt-10 xl:pt-16 flex gap-10 items-center justify-between">
-              <div className="w-[303px] h-[440px] hidden lg:flex">
-                <Image
-                  src={getImgPath("/images/home/about-me/about-banner-img.svg")}
-                  alt="about-banner"
-                  width={303}
-                  height={440}
-                  className="w-full h-full"
-                />
-              </div>
-
-              <div className="w-full lg:max-w-2xl flex-1">
-                {/* <p>
-                  There are many variations of passages of Lorem Ipsum
-                  available, but the majority have suffered alteration in some
-                  form, by injected humour, or randomised words which don't look
-                  even slightly believable. If you are going to use a passage of
-                  Lorem Ipsum, you need to be sure there isn't anything
-                  embarrassing hidden in the middle of text.
-                </p> */}
-
-                <div className="grid grid-cols-3 py-10 xl:py-16 gap-5 border-b border-mistGray">
-                  {[
-                    { count: "05", label: "Years of experience" },
-                    { count: "5+", label: "Happy Clients" },
-                    { count: "8+", label: "Project Completed" },
-                  ].map((item, i) => (
-                    <div key={i}>
-                      <h3>{item.count}</h3>
-                      <p className="text-base md:text-lg text-black">
-                        {item.label}
-                      </p>
-                    </div>
+            <div className="space-y-6">
+              <div className="bg-white rounded-xl p-6 border border-mistGray">
+                <div className="flex items-center gap-3 mb-4">
+                  <Image
+                    src={getImgPath("/images/icon/lang-icon.svg")}
+                    alt="languages"
+                    width={24}
+                    height={24}
+                  />
+                  <h5 className="text-lg font-semibold text-dark">Languages</h5>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {languages.map((lang) => (
+                    <span
+                      key={lang}
+                      className="bg-softGray py-2 px-4 rounded-full text-sm font-medium text-dark"
+                    >
+                      {lang}
+                    </span>
                   ))}
                 </div>
+              </div>
 
-                <div className="pt-8 xl:pt-14 flex flex-col sm:flex-row items-center gap-4">
-                  <div className="flex items-center gap-3.5">
-                    <Image
-                      src={getImgPath("/images/icon/lang-icon.svg")}
-                      alt="lang-icon"
-                      width={30}
-                      height={30}
-                    />
-                    <p className="text-base xl:text-xl text-black">Language</p>
-                  </div>
-                  <div className="flex flex-wrap justify-center items-center gap-2.5">
-                    {["English", "French", "Arabic"].map((lang) => (
-                      <p
-                        key={lang}
-                        className="bg-white py-2 md:py-3.5 px-4 md:px-5 w-fit rounded-full text-base xl:text-xl"
-                      >
-                        {lang}
-                      </p>
-                    ))}
-                  </div>
-                </div>
+              <div className="hidden lg:block relative rounded-xl overflow-hidden h-[200px]">
+                <Image
+                  src={getImgPath("/images/home/about-me/about-banner-img.svg")}
+                  alt="decorative"
+                  width={303}
+                  height={200}
+                  className="w-full h-full object-cover"
+                />
               </div>
             </div>
           </div>

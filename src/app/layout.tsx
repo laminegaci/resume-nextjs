@@ -5,13 +5,21 @@ import Header from "./components/layout/header";
 import Footer from "./components/layout/footer";
 
 const bricolageGrotesque = Bricolage_Grotesque({
-  variable: "--font-geist-sans",
+  variable: "--font-bricolage",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Resume",
-  description: "Portfolio website of Mohamed Lamine GACI, showcasing projects, skills, and experience.",
+  title: "Mohamed Lamine Gaci | Full-Stack Developer",
+  description: "Portfolio of Mohamed Lamine Gaci, a Full-Stack Web Developer specializing in PHP Laravel, React, and modern web technologies. Explore my projects, skills, and experience.",
+  icons: {
+    icon: "/favicon-s.ico",
+  },
+  openGraph: {
+    title: "Mohamed Lamine Gaci | Full-Stack Developer",
+    description: "Portfolio showcasing projects, skills, and experience in web development.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
@@ -21,7 +29,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={bricolageGrotesque.className}>
+      <body className={`${bricolageGrotesque.variable} font-sans`}>
         <Header />
         {children}
         <Footer/>

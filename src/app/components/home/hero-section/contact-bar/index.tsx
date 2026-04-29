@@ -3,9 +3,11 @@ import { getDataPath, getImgPath } from "@/utils/image";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import type { ContactBarData, ContactItem, SocialItem } from "@/app/types/portfolio";
 
 const ContactBar = () => {
-  const [contactBarData, setContactBarData] = useState<any>(null);
+  const [contactBarData, setContactBarData] = useState<ContactBarData | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -15,59 +17,81 @@ const ContactBar = () => {
         const data = await res.json();
         setContactBarData(data?.contactBar);
       } catch (error) {
-        console.error("Error fetching services:", error);
+        console.error("Error fetching contact data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
+  if (loading) {
+    return (
+      <section>
+        <div className="border-t border-softGray">
+          <div className="container">
+            <div className="flex items-center justify-between py-6 md:py-7">
+              <div className="flex gap-4">
+                {[1, 2].map((i) => (
+                  <div key={i} className="w-32 h-6 bg-softGray rounded animate-pulse" />
+                ))}
+              </div>
+              <div className="flex gap-4">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="w-7 h-7 bg-softGray rounded animate-pulse" />
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section>
       <div className="border-t border-softGray">
         <div className="container">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 py-6 md:py-7">
-            {/* Contact Items */}
-            <div className="flex flex-wrap items-center justify-center md:justify-start gap-1.5 md:gap-5 lg:gap-11">
+            <div className="flex flex-wrap items-center justify-center md:justify-start gap-3 md:gap-6 lg:gap-10">
               {contactBarData?.contactItems?.map(
-                (value: any, index: number) => (
+                (item: ContactItem, index: number) => (
                   <Link
                     key={index}
-                    onClick={(e) => e.preventDefault()}
-                    href={"#!"}
-                    className="flex items-center gap-2 lg:gap-4 text-sm md:text-base"
+                    href={item.link}
+                    className="flex items-center gap-2 lg:gap-3 text-sm md:text-base group"
                   >
                     <Image
-                      src={getImgPath(value?.icon)}
-                      alt={value?.type}
-                      width={24}
-                      height={24}
-                      className="min-w-[24px] min-h-[24px]"
+                      src={getImgPath(item.icon)}
+                      alt={item.type}
+                      width={20}
+                      height={20}
+                      className="min-w-[20px] min-h-[20px] group-hover:opacity-70 transition-opacity"
                     />
-
-                    <h6 className="text-sm md:text-base xl:text-xl hover:text-primary">
-                      {value?.label}
-                    </h6>
+                    <span className="text-sm md:text-base text-secondary group-hover:text-primary transition-colors">
+                      {item.label}
+                    </span>
                   </Link>
                 )
               )}
             </div>
 
-            {/* Social Items */}
-            <div className="flex items-center justify-center md:justify-end gap-4 md:gap-2.5">
-              {contactBarData?.socialItems?.map((value: any, index: number) => (
+            <div className="flex items-center gap-3 md:gap-4">
+              {contactBarData?.socialItems?.map((item: SocialItem, index: number) => (
                 <Link
                   key={index}
-                  // onClick={(e) => e.preventDefault()}
-                  href={value?.link}
+                  href={item.link}
                   target="_blank"
+                  rel="noopener noreferrer"
+                  className="group"
                 >
                   <Image
-                    src={getImgPath(value?.icon)}
-                    alt={value?.platform}
-                    width={30}
-                    height={30}
-                    className="hover:opacity-80"
+                    src={getImgPath(item.icon)}
+                    alt={item.platform}
+                    width={24}
+                    height={24}
+                    className="hover:opacity-70 transition-opacity"
                   />
                 </Link>
               ))}

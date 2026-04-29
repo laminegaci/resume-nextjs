@@ -1,86 +1,123 @@
-import React from 'react';
+import type { Experience } from "@/app/types/portfolio";
+
+const experiences: Experience[] = [
+  {
+    year: "2019",
+    title: "Web Developer Intern",
+    company: "Edisoft Chéraga",
+    type: "Part-time",
+    description:
+      "Created a web application for customer management using PHP, gaining foundational experience in web development and database management.",
+    isCurrent: false,
+  },
+  {
+    year: "2020 - 2021",
+    title: "ICT Help Desk Agent",
+    company: "Amnal Staoueli",
+    type: "Full-time, On Site",
+    description:
+      "Provided technical assistance to users, resolving hardware and software issues. Managed server support and database interactions.",
+    isCurrent: false,
+  },
+  {
+    year: "2021 - 2023",
+    title: "Web Developer",
+    company: "FB-Technologies Ouled Fayet",
+    type: "Full-time, Remote",
+    description:
+      "Designed and developed new websites/web applications and maintained existing ones. Created PHP scripts to process large data volumes.",
+    isCurrent: false,
+  },
+  {
+    year: "2023 - Present",
+    title: "Backend Developer",
+    company: "Whitebay Limited",
+    type: "Full-time, On Site",
+    description:
+      "Design, develop, and maintain scalable web applications using Laravel, Livewire, and Inertia.js. Build and optimize RESTful APIs, integrate third-party services (Stripe, PrestaShop), and automate business workflows.",
+    isCurrent: true,
+  },
+];
 
 const ExperienceSec = () => {
-    const experiences = [
-        {
-            year: "2019",
-            title: "Web Developer Intern",
-            company: "Edisoft Chéraga",
-            type: "Part-time",
-            description: "Creation of a web application for customer management using PHP."
-        },
-        {
-            year: "2020 - 2021",
-            title: "ICT help desk agent",
-            company: "Amnal Staoueli",
-            type: "Fulltime, On Site",
-            description: "Regular technical assistance to users, resolving hardware and software issues, Technical support with the server and interact with the database."
-        },
-        {
-            year: "2021 - 2023",
-            title: "Web Developer",
-            company: "FB-Technologies Ouled fayet",
-            type: "Fulltime, Remote",
-            description: "Design and development of new websites/webapps and maintenance of existing ones, Creates PHP scripts to process large data volumes."
-        },
-        {
-            year: "2023+",
-            title: "Backend Developer",
-            company: "Whitebay limited Sidi abdellah zeralda",
-            type: "Fulltime, On Site",
-            description: "Designed, developed, and maintained scalable web applications using Laravel, Livewire, and Inertia.js. Collaborated with the front-end team and Built and optimized RESTful APIs to connect web platforms. Integrated third-party APIs (Stripe, PrestaShop, etc.) to synchronize data and automate business workflows."
-        }
-    ];
+  return (
+    <section id="experience" className="scroll-mt-24">
+      <div className="py-16 md:py-28">
+        <div className="container">
+          <div className="section-heading">
+            <h2>Experience</h2>
+            <p className="section-number">( 02 )</p>
+          </div>
 
-    return (
-        <section>
-            <div className="py-16 md:py-32">
-                <div className="container mx-auto px-4">
-                    <div className="flex items-center justify-between gap-2 border-b border-black pb-7 mb-9 md:mb-16">
-                        <h2>Experience</h2>
-                        <p className="text-xl text-primary">( 02 )</p>
+          <div className="relative">
+            <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-px bg-mistGray transform md:-translate-x-px" />
+
+            <div className="space-y-8 md:space-y-12">
+              {experiences.map((exp, index) => (
+                <div
+                  key={index}
+                  className={`relative grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8 ${
+                    index % 2 === 0 ? "md:pr-12" : "md:pl-12"
+                  }`}
+                >
+                  <div
+                    className={`hidden md:flex absolute left-4 md:left-1/2 top-0 transform -translate-x-1/2 z-10`}
+                  >
+                    <div
+                      className={`w-4 h-4 rounded-full border-2 bg-white flex items-center justify-center ${
+                        exp.isCurrent
+                          ? "border-primary shadow-lg shadow-primary/30"
+                          : "border-mistGray"
+                      }`}
+                    >
+                      {exp.isCurrent && (
+                        <div className="w-2 h-2 rounded-full bg-primary" />
+                      )}
+                    </div>
+                  </div>
+
+                  <div
+                    className={`card-hover bg-white rounded-xl p-6 border ${
+                      exp.isCurrent
+                        ? "border-primary/30 shadow-lg shadow-primary/10"
+                        : "border-mistGray"
+                    }`}
+                  >
+                    <div className="flex flex-wrap items-center gap-3 mb-3">
+                      <span
+                        className={`text-sm font-mono font-semibold px-3 py-1 rounded-full ${
+                          exp.isCurrent
+                            ? "bg-primary/10 text-primary"
+                            : "bg-softGray text-secondary"
+                        }`}
+                      >
+                        {exp.year}
+                      </span>
+                      <span className="text-xs text-secondary">{exp.type}</span>
                     </div>
 
-                    <div className="space-y-7 md:space-y-12">
-                        {experiences.map((exp, index) => (
-                            <div key={index} className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 md:gap-4 xl:gap-8 items-start relative">
-                                <div className="">
-                                    <h4 className="font-bold mb-2 text-black">{exp.year}</h4>
-                                    <h4 className="text-lg font-normal">{exp.title}</h4>
-                                </div>
+                    <h5 className="text-lg md:text-xl font-semibold text-dark mb-2">
+                      {exp.title}
+                    </h5>
 
-                                <div className=" relative">
-                                    {index < experiences.length && (
-                                        <div className={`absolute left-0 top-3 w-px ${index < experiences.length - 1 ? 'h-40' : 'h-30'} bg-softGray`}></div>
-                                    )}
+                    <p className="text-sm font-medium text-primary mb-3">
+                      {exp.company}
+                    </p>
 
-                                    <div className="no-print absolute left-0 top-0 transform -translate-x-1/2">
-                                        <div className={`no-print w-3.5 h-3.5 rounded-full border-1 bg-white flex items-center justify-center ${index === 3 ? 'border-primary' : 'border-black'
-                                            }`}>
-                                            {index === 3 && (
-                                                <div className="w-1.5 h-1.5 rounded-full bg-primary"></div>
-                                            )}
-                                        </div>
-                                    </div>
+                    <p className="text-sm text-secondary leading-relaxed">
+                      {exp.description}
+                    </p>
+                  </div>
 
-                                    <div className="pl-4 lg:pl-7">
-                                        <div className="flex items-center gap-2 mb-1">
-                                            <span className="text-xl text-black font-normal">{exp.company}</span>
-                                        </div>
-                                        <p className="text-base font-normal">{exp.type}</p>
-                                    </div>
-                                </div>
-
-                                <div className="pl-8 sm:pl-0">
-                                    <p className="leading-relaxed text-base">{exp.description}</p>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                  <div className="hidden md:block" />
                 </div>
+              ))}
             </div>
-        </section>
-    );
+          </div>
+        </div>
+      </div>
+    </section>
+  );
 };
 
 export default ExperienceSec;

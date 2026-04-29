@@ -1,54 +1,78 @@
 import { getImgPath } from "@/utils/image";
 import Image from "next/image";
+import ContactBar from "./contact-bar";
 
-const index = () => {
+const HeroSection = () => {
   return (
-    <section className="relative hero-section overflow-hidden pt-35 md:pt-40 pb-12 lg:pb-30 xl:pt-52">
-      <div className="container">
-        <div className="lg:flex grid grid-cols-1 sm:grid-cols-2 gap-7 md:gap-4 items-center">
-          <div className="flex flex-col gap-4 md:gap-7 max-w-2xl">
-            <div>
-              <div className="flex items-center gap-8">
-                <h3>I'm Mohamed Lamine</h3>
-                <div className="wave">
-                  <Image
-                    src={getImgPath("/images/home/banner/wave-icon.svg")}
-                    alt="wave-icon"
-                    width={62}
-                    height={62}
-                    className=""
-                  />
-                </div>
-              </div>
-              <h3>Full-Stack Web Developer | PHP Laravel Specialist</h3>
-            </div>
-            <p className="text-secondary font-normal max-w-md xl:max-w-xl">
-              Young dynamic and motivated web developer, passionate about computer science and
-              new technologies. I specialize in creating robust and scalable web applications using PHP and the Laravel framework. 
-              With a keen eye for detail and a commitment to delivering high-quality code, I strive to build solutions that not only meet but exceed client expectations.
+    <section className="relative hero-section overflow-hidden pt-28 md:pt-32 pb-8 md:pb-16">
+      <div className="absolute inset-0 bg-gradient-to-br from-softGray via-white to-softGray opacity-50" />
 
+      <div className="container relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
+          <div className="flex flex-col gap-6 md:gap-8 animate-slide-up">
+            <div className="flex items-center gap-3">
+              <span className="inline-block w-12 h-0.5 bg-primary" />
+              <span className="text-sm md:text-base font-medium text-secondary uppercase tracking-wider">
+                Full-Stack Developer
+              </span>
+            </div>
+
+            <h1 className="leading-tight">
+              <span className="block text-dark">Mohamed Lamine</span>
+              <span className="block gradient-text">Gaci</span>
+            </h1>
+
+            <p className="text-base md:text-lg text-secondary max-w-lg leading-relaxed">
+              Passionate web developer specializing in creating robust and scalable
+              web applications using PHP, Laravel, and modern frontend frameworks.
+              Turning ideas into powerful digital solutions.
             </p>
+
+            <div className="flex flex-wrap items-center gap-4 pt-2">
+              <a href="#work" className="btn-primary">
+                <span className="text-base text-black group-hover:text-white">
+                  View My Work
+                </span>
+              </a>
+              <a href="#contact" className="btn-primary border-dark hover:border-primary">
+                <span className="text-base text-dark group-hover:text-white">
+                  Get In Touch
+                </span>
+              </a>
+            </div>
+
+            <div className="flex items-center gap-2 pt-4">
+              <div className="wave">
+                <Image
+                  src={getImgPath("/images/home/banner/wave-icon.svg")}
+                  alt="wave-icon"
+                  width={48}
+                  height={48}
+                />
+              </div>
+              <span className="text-sm text-secondary">
+                Available for opportunities
+              </span>
+            </div>
           </div>
-          <Image
-            src={getImgPath("/images/home/banner/me.png")}
-            alt="banner-img"
-            width={685}
-            height={650}
-            className="block lg:hidden"
-          />
+
+          <div className="relative lg:h-[500px] xl:h-[600px] flex items-center justify-center animate-fade-in">
+            <div className="absolute inset-0 bg-gradient-to-tr from-primary/10 to-transparent rounded-full blur-3xl" />
+            <Image
+              src={getImgPath("/images/home/banner/me.png")}
+              alt="Mohamed Lamine Gaci"
+              width={685}
+              height={650}
+              className="relative z-10 w-full max-w-md lg:max-w-lg xl:max-w-xl h-auto object-contain"
+              priority
+            />
+          </div>
         </div>
       </div>
-      <div className="absolute right-0 top-0 hidden h-auto w-1/2 lg:block 2xl:h-171.5 2xl:w-187.5">
-        <Image
-          src={getImgPath("/images/home/banner/me.png")}
-          alt="banner-img"
-          width={685}
-          height={650}
-          className=" absolute right-0 top-0 z-1"
-        />
-      </div>
+
+      <ContactBar />
     </section>
   );
 };
 
-export default index;
+export default HeroSection;

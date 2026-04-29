@@ -12,53 +12,57 @@ body {
   height: 100%;
 }
 
-button::before {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 0%;
-  background-color: #FE4300; 
-  transition: height 0.3s ease;
-  z-index: 0;
-}
-
-button:hover::before {
-  height: 100%;
-}
-
-.wave {
-  animation-name: wave-animation;
-  animation-duration: 2.5s;
-  animation-iteration-count: infinite;
-  transform-origin: 70% 70%;
-  display: inline-block;
-}
-
-@keyframes wave-animation {
-    0% { transform: rotate( 0.0deg) }
-   10% { transform: rotate(14.0deg) }  
-   20% { transform: rotate(-8.0deg) }
-   30% { transform: rotate(14.0deg) }
-   40% { transform: rotate(-4.0deg) }
-   50% { transform: rotate(10.0deg) }
-   60% { transform: rotate( 0.0deg) } 
-  100% { transform: rotate( 0.0deg) }
-}
-
-
-
-
-
 @theme {
   --color-primary: #FE4300;
+  --color-primary-dark: #E03A00;
+  --color-primary-light: #FF6B33;
   --color-secondary: #868686;
   --color-softGray: #F0F0F0;
   --color-mistGray: #D7DCDD;
   --color-gray: #C0D8E0;
+  --color-dark: #1A1A1A;
+  --color-surface: #FAFAFA;
 
   --breakpoint-xs: 425px;
+
+  --font-sans: var(--font-bricolage), ui-sans-serif, system-ui, sans-serif;
+
+  --animate-fade-in: fade-in 0.6s ease-out forwards;
+  --animate-slide-up: slide-up 0.6s ease-out forwards;
+  --animate-slide-in-right: slide-in-right 0.5s ease-out forwards;
+  --animate-scale-in: scale-in 0.4s ease-out forwards;
+  --animate-float: float 3s ease-in-out infinite;
+  --animate-pulse-soft: pulse-soft 2s ease-in-out infinite;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slide-up {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes scale-in {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
 }
 
 @layer utilities {
@@ -69,7 +73,42 @@ button:hover::before {
     @apply text-secondary text-sm font-normal;
   }
   .input {
-    @apply w-full border-b border-gray focus:border-primary focus:outline-none py-2;
+    @apply w-full border-b border-gray focus:border-primary focus:outline-none py-2 transition-colors duration-300;
+  }
+  .btn-primary {
+    @apply relative overflow-hidden cursor-pointer w-fit py-2.5 sm:py-3 md:py-4 px-5 sm:px-6 md:px-8 border-2 border-primary rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-primary/20;
+  }
+  .btn-primary::before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 0%;
+    background-color: #FE4300;
+    transition: height 0.3s ease;
+    z-index: 0;
+  }
+  .btn-primary:hover::before {
+    height: 100%;
+  }
+  .btn-primary span {
+    @apply relative z-10 font-medium transition-colors duration-300;
+  }
+  .btn-primary:hover span {
+    @apply text-white;
+  }
+  .section-heading {
+    @apply flex items-center justify-between gap-2 border-b-2 border-dark pb-4 mb-8 md:mb-12;
+  }
+  .section-number {
+    @apply text-xl md:text-2xl font-mono text-primary;
+  }
+  .card-hover {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
+  }
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-primary-light bg-clip-text text-transparent;
   }
 }
 
@@ -101,6 +140,25 @@ button:hover::before {
   p {
     @apply text-base text-secondary;
   }
+}
+
+.wave {
+  animation-name: wave-animation;
+  animation-duration: 2.5s;
+  animation-iteration-count: infinite;
+  transform-origin: 70% 70%;
+  display: inline-block;
+}
+
+@keyframes wave-animation {
+    0% { transform: rotate( 0.0deg) }
+   10% { transform: rotate(14.0deg) }  
+   20% { transform: rotate(-8.0deg) }
+   30% { transform: rotate(14.0deg) }
+   40% { transform: rotate(-4.0deg) }
+   50% { transform: rotate(10.0deg) }
+   60% { transform: rotate( 0.0deg) } 
+  100% { transform: rotate( 0.0deg) }
 }
 
 @media print {

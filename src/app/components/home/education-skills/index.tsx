@@ -2,9 +2,42 @@
 import { getDataPath, getImgPath } from "@/utils/image";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import type { EducationData, Skill } from "@/app/types/portfolio";
+
+const skills: Skill[] = [
+  { name: "HTML5", icon: "/images/icon/html.svg", category: "frontend" },
+  { name: "CSS3", icon: "/images/icon/css.svg", category: "frontend" },
+  { name: "JavaScript", icon: "/images/icon/javascript.svg", category: "frontend" },
+  { name: "TypeScript", icon: "/images/icon/typescript.svg", category: "frontend" },
+  { name: "React", icon: "/images/icon/react.svg", category: "frontend" },
+  { name: "Vue", icon: "/images/icon/vue.svg", category: "frontend" },
+  { name: "Next.js", icon: "/images/icon/nextjs.svg", category: "frontend" },
+  { name: "TailwindCSS", icon: "/images/icon/tailwind.svg", category: "frontend" },
+  { name: "Bootstrap", icon: "/images/icon/bootstrap.svg", category: "frontend" },
+  { name: "Semantic UI", icon: "/images/icon/semantic.svg", category: "frontend" },
+  { name: "PHP", icon: "/images/icon/php.svg", category: "backend" },
+  { name: "Laravel", icon: "/images/icon/laravel.svg", category: "backend" },
+  { name: "Node.js", icon: "/images/icon/nodejs.svg", category: "backend" },
+  { name: "MySQL", icon: "/images/icon/mysql.svg", category: "database" },
+  { name: "Git", icon: "/images/icon/git.svg", category: "tools" },
+  { name: "GitHub", icon: "/images/icon/github.svg", category: "tools" },
+  { name: "GitLab", icon: "/images/icon/gitlab.svg", category: "tools" },
+  { name: "Docker", icon: "/images/icon/docker.svg", category: "tools" },
+  { name: "VS Code", icon: "/images/icon/vscode.svg", category: "tools" },
+  { name: "Apache", icon: "/images/icon/apache.svg", category: "tools" },
+  { name: "Nginx", icon: "/images/icon/nginx.svg", category: "tools" },
+];
+
+const categoryLabels: Record<string, string> = {
+  frontend: "Frontend",
+  backend: "Backend",
+  database: "Database",
+  tools: "Tools & DevOps",
+};
 
 const EducationSkills = () => {
-  const [educationData, setEductionData] = useState<any>(null);
+  const [educationData, setEducationData] = useState<EducationData | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -12,89 +45,104 @@ const EducationSkills = () => {
         const res = await fetch(getDataPath("/data/page-data.json"));
         if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
-        setEductionData(data?.educationData);
+        setEducationData(data?.educationData);
       } catch (error) {
-        console.error("Error fetching services:", error);
+        console.error("Error fetching education data:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchData();
   }, []);
 
+  const groupedSkills = skills.reduce<Record<string, Skill[]>>((acc, skill) => {
+    if (!acc[skill.category]) {
+      acc[skill.category] = [];
+    }
+    acc[skill.category].push(skill);
+    return acc;
+  }, {});
+
   return (
-    <section>
-      <div className="border-t border-softGray overflow-hidden">
-        <div className="container relative z-10">
-          <Image
-            src={getImgPath(
-              "/images/home/education-skill/edu-skill-vector.svg"
-            )}
-            alt="vector"
-            width={260}
-            height={170}
-            className="no-print absolute top-0 left-0 transform -translate-y-1/2"
-          />
-          <div className="relative z-10 py-16 md:py-32">
-            <div className="flex items-center justify-between gap-2 border-b border-black pb-7 mb-9 xl:mb-16">
-              <h2>Tech Stack</h2>
-              <p className="text-xl text-orange-500"></p>
-            </div>
-            <div className="flex flex-col lg:flex-row items-center gap-10 xl:gap-20">
-          <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-12 gap-8 justify-items-center">
-            {[
-              // --- Frontend ---
-              { name: "HTML5", icon: "/images/icon/html.svg" },
-              { name: "CSS3", icon: "/images/icon/css.svg" },
-              { name: "JavaScript", icon: "/images/icon/javascript.svg" },
-              { name: "TypeScript", icon: "/images/icon/typescript.svg" },
-              { name: "React", icon: "/images/icon/react.svg" },
-              { name: "Vue", icon: "/images/icon/vue.svg" },
-              { name: "Next.js", icon: "/images/icon/nextjs.svg" },
-              { name: "TailwindCSS", icon: "/images/icon/tailwind.svg" },
-              { name: "Bootstrap", icon: "/images/icon/bootstrap.svg" },
-              { name: "Semantic", icon: "/images/icon/semantic.svg" },
+    <section id="skills" className="scroll-mt-24">
+      <div className="border-t border-softGray py-16 md:py-28">
+        <div className="container">
+          <div className="section-heading">
+            <h2>Tech Stack</h2>
+            <p className="section-number"></p>
+          </div>
 
-              // --- Backend ---
-              { name: "PHP", icon: "/images/icon/php.svg" },
-              { name: "Laravel", icon: "/images/icon/laravel.svg" },
-              { name: "Node.js", icon: "/images/icon/nodejs.svg" },
-
-              // --- Database ---
-              { name: "MySQL", icon: "/images/icon/mysql.svg" },
-
-              // --- Tools & DevOps ---
-              { name: "Git", icon: "/images/icon/git.svg" },
-              { name: "GitHub", icon: "/images/icon/github.svg" },
-              { name: "GitHub", icon: "/images/icon/gitlab.svg" },
-              { name: "Docker", icon: "/images/icon/docker.svg" },
-              { name: "VS Code", icon: "/images/icon/vscode.svg" },
-              { name: "Apache", icon: "/images/icon/apache.svg" },
-              { name: "Nginx", icon: "/images/icon/nginx.svg" },
-            ].map((skill) => (
-              <div
-                key={skill.name}
-                className="group flex flex-col items-center text-center transition-transform hover:-translate-y-2"
-              >
-                <div className="p-4 bg-gray-100 rounded-2xl shadow-sm group-hover:shadow-md transition-shadow">
-                  <Image
-                    src={getImgPath(skill.icon)}
-                    alt={skill.name}
-                    width={50}
-                    height={50}
-                    className="object-contain"
-                  />
-                </div>
-                <p className="mt-3 text-sm font-medium text-gray-700 group-hover:text-orange-500">
-                  {skill.name}
-                </p>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12">
+            <div className="lg:col-span-2">
+              <div className="space-y-8">
+                {Object.entries(groupedSkills).map(([category, categorySkills]) => (
+                  <div key={category}>
+                    <h5 className="text-base font-semibold text-dark mb-4 uppercase tracking-wider">
+                      {categoryLabels[category]}
+                    </h5>
+                    <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 gap-4">
+                      {categorySkills.map((skill) => (
+                        <div
+                          key={skill.name}
+                          className="group flex flex-col items-center text-center card-hover"
+                        >
+                          <div className="p-4 bg-white rounded-xl shadow-sm border border-mistGray group-hover:border-primary/30 group-hover:shadow-md transition-all">
+                            <Image
+                              src={getImgPath(skill.icon)}
+                              alt={skill.name}
+                              width={40}
+                              height={40}
+                              className="object-contain group-hover:scale-110 transition-transform duration-300"
+                            />
+                          </div>
+                          <p className="mt-2 text-xs font-medium text-secondary group-hover:text-primary transition-colors">
+                            {skill.name}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            <div className="space-y-6">
+              <div className="bg-softGray rounded-xl p-6">
+                <h5 className="text-lg font-semibold text-dark mb-4">Education</h5>
+                {loading ? (
+                  <div className="space-y-4">
+                    {[1, 2].map((i) => (
+                      <div key={i} className="h-20 bg-white rounded animate-pulse" />
+                    ))}
+                  </div>
+                ) : educationData?.education?.length ? (
+                  <div className="space-y-4">
+                    {educationData!.education.map((edu, index) => (
+                      <div
+                        key={index}
+                        className="bg-white rounded-lg p-4 border border-mistGray"
+                      >
+                        <p className="text-sm font-semibold text-dark mb-1">
+                          {edu.title}
+                        </p>
+                        <p className="text-xs text-secondary leading-relaxed">
+                          {edu.description}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <p className="text-sm text-secondary">
+                    Education details coming soon.
+                  </p>
+                )}
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
   );
 };
 

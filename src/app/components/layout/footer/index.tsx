@@ -1,36 +1,44 @@
 import Logo from "../logo";
 
 const Footer = () => {
+  const currentYear = new Date().getFullYear();
+
   return (
-    <footer className="py-6 sm:py-14 flex items-center justify-center">
+    <footer className="bg-dark text-white py-12 md:py-16">
       <div className="container">
-        <div className="flex flex-col gap-1.5 items-center sm:items-start">
-          <div className="relative flex items-center w-full">
-            <div className="flex-grow h-px bg-black" />
-            <div className="mx-4">
-              {/* <Logo /> */}
+        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
+          <div className="flex flex-col items-center md:items-start gap-4">
+            <div className="opacity-80">
+              <Logo />
             </div>
-            <div className="flex-grow h-px bg-black" />
+            <p className="text-sm text-gray-400">
+              Full-Stack Developer specializing in Laravel & modern web technologies
+            </p>
           </div>
-          <p className="text-secondary">
-            Designed by{" "}
-            <a
-              href="https://getnextjstemplates.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary hover:underline"
-            >
-              getnextjstemplates
-            </a>{" "}
-            • Distributed by{" "}
-            <a
-              href="https://themewagon.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary hover:underline"
-            >
-              ThemeWagon
-            </a>
+
+          <div className="flex flex-col items-center md:items-center gap-4">
+            <div className="flex items-center gap-6">
+              {["About", "Experience", "Skills", "Work", "Contact"].map(
+                (item) => (
+                  <a
+                    key={item}
+                    href={`#${item.toLowerCase()}`}
+                    className="text-sm text-gray-400 hover:text-primary transition-colors duration-300"
+                  >
+                    {item}
+                  </a>
+                )
+              )}
+            </div>
+          </div>
+        </div>
+
+        <div className="mt-10 pt-8 border-t border-gray-800 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-sm text-gray-500">
+            © {currentYear} Mohamed Lamine Gaci. All rights reserved.
+          </p>
+          <p className="text-sm text-gray-500">
+            Built with Next.js & Tailwind CSS
           </p>
         </div>
       </div>
