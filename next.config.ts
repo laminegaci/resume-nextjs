@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  output: "export",
+  output: process.env.NEXT_OUTPUT === "export" ? "export" : undefined,
   eslint: {
     ignoreDuringBuilds: true, // ✅ Skip ESLint checks on production build
   },
