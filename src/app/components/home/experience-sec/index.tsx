@@ -1,12 +1,12 @@
-import type { Experience } from "@/app/types/portfolio";
-import SectionLabel from "@/app/components/ui/section-label";
-import Reveal from "@/app/components/ui/reveal";
+"use client";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
-const experiences: Experience[] = [
+const experiences = [
   {
     year: "2019",
     title: "Web Developer Intern",
-    company: "Edisoft Chéraga",
+    company: "Edisoft Cheraga",
     type: "Part-time",
     description:
       "Created a web application for customer management using PHP, gaining foundational experience in web development and database management.",
@@ -42,50 +42,71 @@ const experiences: Experience[] = [
 ];
 
 const ExperienceSec = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
   return (
-    <section id="experience" className="scroll-mt-24">
-      <div className="border-t border-mistGray/60 dark:border-white/10 py-20 md:py-32">
-        <div className="container">
-          <SectionLabel number="02" eyebrow="Experience" title="Where I've been working." />
+    <section id="experience" className="scroll-mt-24 relative py-24 md:py-32">
+      <div className="container-custom">
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="section-label">
+            <span className="section-number">03</span>
+            <span className="section-line" />
+            <span className="section-eyebrow">Experience</span>
+          </div>
 
-          <ol className="relative">
-            {experiences
-              .slice()
-              .reverse()
-              .map((exp, index) => (
-                <Reveal key={index} delay={index * 0.06}>
-                  <li className="group relative grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-8 py-6 md:py-8 border-t border-mistGray/60 dark:border-white/10 transition-colors hover:bg-softGray/40 dark:hover:bg-white/[0.02] rounded-lg px-2 md:px-4 -mx-2 md:-mx-4">
-                    <div className="md:col-span-3 flex items-center gap-3">
-                      <span className="mono text-xs uppercase tracking-wider text-secondary dark:text-gray-500">
-                        {exp.year}
-                      </span>
-                      {exp.isCurrent && (
-                        <span className="chip mono !text-[10px] !px-2 !py-0.5 !text-emerald-600 dark:!text-emerald-400 border-emerald-500/30">
-                          Current
-                        </span>
-                      )}
-                    </div>
+          <div className="relative">
+            <div className="absolute left-0 top-0 bottom-0 w-px bg-gradient-to-b from-primary/30 via-white/5 to-transparent ml-1" />
 
-                    <div className="md:col-span-9">
-                      <h5 className="text-xl md:text-2xl font-semibold text-dark dark:text-white mb-1 group-hover:text-primary transition-colors">
-                        {exp.title}{" "}
-                        <span className="text-secondary dark:text-gray-500 font-normal">
-                          · {exp.company}
+            <div className="space-y-0">
+              {experiences
+                .slice()
+                .reverse()
+                .map((exp, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={isInView ? { opacity: 1, x: 0 } : {}}
+                    transition={{ duration: 0.6, delay: 0.1 + index * 0.1 }}
+                    className="group relative pl-8 pb-10 last:pb-0"
+                  >
+                    <div className="absolute left-0 top-1 w-2.5 h-2.5 rounded-full bg-[#0a0a0a] border-2 border-primary/50 group-hover:border-primary group-hover:shadow-[0_0_12px_rgba(254,67,0,0.4)] transition-all duration-300" />
+
+                    <div className="rounded-xl p-6 border border-white/5 bg-white/[0.01] hover:bg-white/[0.03] hover:border-white/10 transition-all duration-500 card-3d">
+                      <div className="flex flex-wrap items-center gap-3 mb-3">
+                        <span className="mono text-xs text-white/40">
+                          {exp.year}
                         </span>
+                        {exp.isCurrent && (
+                          <span className="mono text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+                            Current
+                          </span>
+                        )}
+                      </div>
+
+                      <h5 className="text-xl md:text-2xl font-semibold text-white mb-1 group-hover:text-primary transition-colors">
+                        {exp.title}
                       </h5>
-                      <p className="mono text-[11px] uppercase tracking-wider text-secondary/80 dark:text-gray-500 mb-3">
+                      <p className="text-sm text-white/40 mb-3">
+                        {exp.company}
+                      </p>
+                      <p className="mono text-[11px] uppercase tracking-wider text-white/30 mb-4">
                         {exp.type}
                       </p>
-                      <p className="text-sm md:text-base text-secondary dark:text-gray-400 leading-relaxed max-w-3xl">
+                      <p className="text-sm text-white/50 leading-relaxed max-w-3xl">
                         {exp.description}
                       </p>
                     </div>
-                  </li>
-                </Reveal>
-              ))}
-            <li className="border-t border-mistGray/60 dark:border-white/10" aria-hidden />
-          </ol>
-        </div>
+                  </motion.div>
+                ))}
+            </div>
+          </div>
+        </motion.div>
       </div>
     </section>
   );

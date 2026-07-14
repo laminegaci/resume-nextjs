@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Geist_Mono } from "next/font/google";
+import { Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "./components/layout/header";
 import Footer from "./components/layout/footer";
+import CursorGlow from "./components/ui/cursor-glow";
 
-const bricolageGrotesque = Bricolage_Grotesque({
-  variable: "--font-bricolage",
+const inter = Inter({
+  variable: "--font-inter",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
 const geistMono = Geist_Mono({
@@ -34,10 +36,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${bricolageGrotesque.variable} ${geistMono.variable} font-sans`}>
+      <body className={`${inter.variable} ${geistMono.variable} font-sans bg-[#0a0a0a]`}>
         <Header />
+        <CursorGlow />
         {children}
-        <Footer/>
+        <Footer />
       </body>
     </html>
   );

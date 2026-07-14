@@ -4,16 +4,15 @@ import Link from "next/link";
 
 const Logo = () => {
   return (
-    <>
-      <Link href="/">
-        <Image
-          src={getImgPath("/images/logo/logo.svg")}
-          alt="logo"
-          width={70}
-          height={70}
-        />
-      </Link>
-    </>
+    <Link href="/" className="block">
+      <Image
+        src={getImgPath("/images/logo/logo.svg")}
+        alt="logo"
+        width={50}
+        height={50}
+        className="w-10 h-10 md:w-12 md:h-12"
+      />
+    </Link>
   );
 };
 
