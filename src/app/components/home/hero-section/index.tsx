@@ -1,7 +1,9 @@
 "use client";
 import { useRef, useEffect, useState } from "react";
+import Image from "next/image";
 import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import RotatingWord from "@/app/components/ui/rotating-word";
+import { getImgPath } from "@/utils/image";
 
 const HeroSection = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -157,9 +159,14 @@ const HeroSection = () => {
                   <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-transparent" />
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="relative w-full h-full flex items-center justify-center">
-                      <div className="text-8xl md:text-9xl font-bold text-white/5 select-none">
-                        MLG
-                      </div>
+                      <Image
+                        src={getImgPath("/images/home/banner/me.png")}
+                        alt="Profile"
+                        width={400}
+                        height={400}
+                        className="object-contain"
+                        priority
+                      />
                     </div>
                   </div>
                 </div>

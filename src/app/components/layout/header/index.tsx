@@ -74,7 +74,7 @@ const Header = () => {
             <nav className="flex items-center justify-between px-6 py-4">
               <Link href="/" className="relative z-50">
                 <Logo />
-              </Link>
+              </Link> 
 
               <div className="hidden md:flex items-center gap-8">
                 {navLinks.map((link) => (
