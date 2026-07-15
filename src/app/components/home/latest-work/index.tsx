@@ -6,12 +6,13 @@ import { getDataPath, getImgPath } from "@/utils/image";
 import type { WorkData, WorkEntry } from "@/app/types/portfolio";
 
 const ProjectCard = ({ project, index }: { project: WorkEntry; index: number }) => {
-  const cardRef = useRef<HTMLDivElement>(null);
+  const cardRef = useRef<HTMLAnchorElement>(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0 });
   const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   const isInView = useInView(cardRef, { once: true, margin: "-50px" });
+  const isLink = project.link && project.link !== "#";
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLAnchorElement>) => {
     if (cardRef.current) {
       const rect = cardRef.current.getBoundingClientRect();
       const x = (e.clientX - rect.left) / rect.width - 0.5;
@@ -26,8 +27,11 @@ const ProjectCard = ({ project, index }: { project: WorkEntry; index: number }) 
   };
 
   return (
-    <motion.div
+    <motion.a
       ref={cardRef}
+      href={isLink ? project.link : undefined}
+      target={isLink ? "_blank" : undefined}
+      rel={isLink ? "noopener noreferrer" : undefined}
       initial={{ opacity: 0, y: 30 }}
       animate={isInView ? { opacity: 1, y: 0 } : {}}
       transition={{ duration: 0.6, delay: Math.min(index, 5) * 0.08 }}
@@ -38,7 +42,7 @@ const ProjectCard = ({ project, index }: { project: WorkEntry; index: number }) 
         transition: "transform 0.3s ease-out",
         transformStyle: "preserve-3d",
       }}
-      className="group relative overflow-hidden rounded-2xl border border-white/8 bg-surface hover:border-primary/30 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5"
+      className="group relative overflow-hidden rounded-2xl border border-white/8 bg-surface hover:border-primary/30 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5 block"
     >
       <div
         className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"
@@ -93,7 +97,7 @@ const ProjectCard = ({ project, index }: { project: WorkEntry; index: number }) 
           <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white" />
         </svg>
       </div>
-    </motion.div>
+    </motion.a>
   );
 };
 
@@ -146,7 +150,7 @@ const LatestWork = () => {
           ) : workData ? (
             <>
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {workData.slice(0, 9).map((project, index) => (
+                {workData.slice(0, 12).map((project, index) => (
                   <ProjectCard key={project.slug} project={project} index={index} />
                 ))}
               </div>
