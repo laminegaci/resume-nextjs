@@ -1,103 +1,107 @@
 "use client";
-import { getDataPath, getImgPath } from "@/utils/image";
+import { useRef, useState, useEffect } from "react";
+import { motion, useInView } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import { getDataPath, getImgPath } from "@/utils/image";
 import type { WorkData, WorkEntry } from "@/app/types/portfolio";
-import Reveal from "@/app/components/ui/reveal";
-import SectionLabel from "@/app/components/ui/section-label";
-
-const bentoSpan = (i: number): string => {
-  // Editorial bento: first tile is hero, then 2 medium, then a wide, then a tall, then squares.
-  const patterns = [
-    "md:col-span-4 md:row-span-2", // 0: large hero
-    "md:col-span-2 md:row-span-1",
-    "md:col-span-2 md:row-span-1",
-    "md:col-span-3 md:row-span-1", // wide
-    "md:col-span-3 md:row-span-1", // wide
-    "md:col-span-2 md:row-span-1",
-    "md:col-span-2 md:row-span-1",
-    "md:col-span-2 md:row-span-1",
-  ];
-  return patterns[i % patterns.length];
-};
 
 const ProjectCard = ({ project, index }: { project: WorkEntry; index: number }) => {
-  const isHero = index === 0;
+  const cardRef = useRef<HTMLDivElement>(null);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  const isInView = useInView(cardRef, { once: true, margin: "-50px" });
+
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (cardRef.current) {
+      const rect = cardRef.current.getBoundingClientRect();
+      const x = (e.clientX - rect.left) / rect.width - 0.5;
+      const y = (e.clientY - rect.top) / rect.height - 0.5;
+      setTilt({ x: y * -10, y: x * 10 });
+      setMousePos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setTilt({ x: 0, y: 0 });
+  };
+
   return (
-    <Reveal delay={Math.min(index, 4) * 0.06}>
-      <Link
-        href={project.link && project.link !== "#" ? project.link : "#"}
-        target={project.link && project.link !== "#" ? "_blank" : undefined}
-        rel="noopener noreferrer"
-        className={`group relative block h-full overflow-hidden rounded-2xl border border-mistGray/60 dark:border-white/10 bg-white dark:bg-white/[0.02] transition-all duration-500 hover:border-primary/40 hover:shadow-2xl hover:shadow-primary/5 ${
-          isHero ? "min-h-[420px] md:min-h-[520px]" : "min-h-[260px]"
-        }`}
-        aria-label={`View project: ${project.title}`}
-      >
+    <motion.div
+      ref={cardRef}
+      initial={{ opacity: 0, y: 30 }}
+      animate={isInView ? { opacity: 1, y: 0 } : {}}
+      transition={{ duration: 0.6, delay: Math.min(index, 5) * 0.08 }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      style={{
+        transform: `perspective(1000px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
+        transition: "transform 0.3s ease-out",
+        transformStyle: "preserve-3d",
+      }}
+      className="group relative overflow-hidden rounded-2xl border border-white/8 bg-surface hover:border-primary/30 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5"
+    >
+      <div
+        className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10"
+        style={{
+          background: `radial-gradient(300px circle at ${mousePos.x}px ${mousePos.y}px, rgba(254, 67, 0, 0.08), transparent 60%)`,
+        }}
+      />
+
+      <div className="relative aspect-video overflow-hidden">
         <Image
           src={getImgPath(project.image)}
           alt={project.title}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-          className="object-cover opacity-90 group-hover:opacity-100 group-hover:scale-[1.04] transition-all duration-700 ease-out"
-          loading={isHero ? "eager" : "lazy"}
+          className="object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-out"
+          loading={index < 3 ? "eager" : "lazy"}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-[#0a0a0a]/40 to-transparent" />
+      </div>
 
-        <div className="absolute inset-0 p-5 md:p-7 flex flex-col justify-end text-white">
-          <div className="flex items-center gap-2 mb-3 mono text-[10px] uppercase tracking-wider text-white/70">
-            <span>{String(index + 1).padStart(2, "0")}</span>
-            <span className="h-px w-6 bg-white/30" />
-            <span>{project.client}</span>
-          </div>
-
-          <h5
-            className={`text-white font-semibold display-tight mb-2 ${
-              isHero ? "text-3xl md:text-4xl" : "text-xl md:text-2xl"
-            }`}
-          >
-            {project.title}
-          </h5>
-
-          {project.description && isHero && (
-            <p className="text-sm md:text-base text-white/75 max-w-md mb-4 leading-relaxed">
-              {project.description}
-            </p>
-          )}
-
-          <div className="flex flex-wrap items-center gap-2 mt-1">
-            {project.tags?.slice(0, 3).map((tag) => (
-              <span
-                key={tag}
-                className="mono text-[10px] uppercase tracking-wider text-white/70 px-2 py-1 rounded-full border border-white/15"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-
-          <div className="absolute top-5 right-5 md:top-7 md:right-7 w-10 h-10 rounded-full border border-white/20 bg-white/5 backdrop-blur-sm flex items-center justify-center opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-500">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M7 17L17 7M17 7H7M17 7V17"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </div>
+      <div className="relative p-5 md:p-6">
+        <div className="flex items-center gap-2 mb-3 mono text-[10px] uppercase tracking-wider text-white/40">
+          <span>{String(index + 1).padStart(2, "0")}</span>
+          <span className="h-px w-4 bg-white/10" />
+          <span>{project.client}</span>
         </div>
-      </Link>
-    </Reveal>
+
+        <h5 className="text-lg md:text-xl font-semibold text-white mb-2 display-tight group-hover:text-primary transition-colors">
+          {project.title}
+        </h5>
+
+        {project.description && (
+          <p className="text-sm text-white/40 mb-4 leading-relaxed line-clamp-2">
+            {project.description}
+          </p>
+        )}
+
+        <div className="flex flex-wrap items-center gap-2">
+          {project.tags?.slice(0, 3).map((tag) => (
+            <span
+              key={tag}
+              className="tag"
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full glass flex items-center justify-center opacity-0 group-hover:opacity-100 translate-x-2 group-hover:translate-x-0 transition-all duration-500">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
+          <path d="M7 17L17 7M17 7H7M17 7V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-white" />
+        </svg>
+      </div>
+    </motion.div>
   );
 };
 
 const LatestWork = () => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
   const [workData, setWorkData] = useState<WorkEntry[] | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -108,7 +112,6 @@ const LatestWork = () => {
         setWorkData(data?.workData);
       } catch {
         console.error("Error fetching work data");
-        setError(true);
       } finally {
         setLoading(false);
       }
@@ -117,53 +120,62 @@ const LatestWork = () => {
   }, []);
 
   return (
-    <section id="work" className="scroll-mt-24">
-      <div className="border-t border-mistGray/60 dark:border-white/10 py-20 md:py-32">
-        <div className="container">
-          <SectionLabel number="04" eyebrow="Selected Work" title="Things I've shipped." />
+    <section id="work" className="scroll-mt-24 relative py-24 md:py-32">
+      <div className="container-custom">
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="section-label">
+            <span className="section-number">04</span>
+            <span className="section-line" />
+            <span className="section-eyebrow">Selected Work</span>
+          </div>
 
-          {loading && (
-            <div className="grid grid-cols-1 md:grid-cols-6 md:auto-rows-[200px] gap-4 md:gap-5">
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
               {[0, 1, 2, 3, 4, 5].map((i) => (
                 <div
                   key={i}
-                  className={`rounded-2xl bg-softGray dark:bg-white/[0.03] animate-pulse ${bentoSpan(i)} min-h-[260px]`}
+                  className="rounded-2xl bg-surface border border-white/5 animate-pulse aspect-[4/3]"
                 />
               ))}
             </div>
-          )}
-
-          {error && (
-            <p className="text-center text-secondary py-12">
-              Unable to load projects. Please try again later.
-            </p>
-          )}
-
-          {!loading && !error && workData && (
+          ) : workData ? (
             <>
-              <div className="grid grid-cols-1 md:grid-cols-6 md:auto-rows-[180px] gap-4 md:gap-5">
-                {workData.slice(0, 8).map((project, index) => (
-                  <div key={project.slug} className={bentoSpan(index)}>
-                    <ProjectCard project={project} index={index} />
-                  </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                {workData.slice(0, 9).map((project, index) => (
+                  <ProjectCard key={project.slug} project={project} index={index} />
                 ))}
               </div>
 
-              <div className="flex justify-center mt-12 md:mt-16">
-                <Link
+              <motion.div
+                className="flex justify-center mt-12 md:mt-16"
+                initial={{ opacity: 0 }}
+                animate={isInView ? { opacity: 1 } : {}}
+                transition={{ delay: 0.6 }}
+              >
+                <a
                   href="https://github.com/laminegaci"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2 mono text-xs uppercase tracking-wider text-secondary dark:text-gray-400 hover:text-primary transition-colors"
+                  className="btn-secondary group"
                 >
-                  <span className="h-px w-8 bg-current transition-all group-hover:w-12" />
-                  More on GitHub
-                  <span aria-hidden>→</span>
-                </Link>
-              </div>
+                  View more on GitHub
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" className="group-hover:translate-x-0.5 transition-transform">
+                    <path d="M5 12h14M12 5l7 7-7 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </a>
+              </motion.div>
             </>
+          ) : (
+            <p className="text-center text-white/40 py-12">
+              Unable to load projects. Please try again later.
+            </p>
           )}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

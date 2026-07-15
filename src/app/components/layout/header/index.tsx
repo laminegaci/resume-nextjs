@@ -1,96 +1,51 @@
 "use client";
-
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Link from "next/link";
 import Logo from "../logo";
-import ThemeToggle from "@/app/components/ui/theme-toggle";
 
 const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Experience", href: "#experience" },
-  { label: "Skills", href: "#skills" },
-  { label: "Work", href: "#work" },
-  { label: "Contact", href: "#contact" },
+  { href: "#about", label: "About" },
+  { href: "#skills", label: "Skills" },
+  { href: "#experience", label: "Experience" },
+  { href: "#work", label: "Work" },
+  { href: "#contact", label: "Contact" },
 ];
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState<string>("");
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
-  const firstButtonRef = useRef<HTMLButtonElement>(null);
+  const [activeSection, setActiveSection] = useState("");
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
-  useEffect(() => {
-    const sections = navLinks
-      .map((l) => document.querySelector(l.href))
-      .filter((el): el is Element => el !== null);
-    if (sections.length === 0) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(`#${entry.target.id}`);
-          }
-        });
-      },
-      { rootMargin: "-40% 0px -55% 0px", threshold: 0 }
-    );
-
-    sections.forEach((s) => observer.observe(s));
-    return () => observer.disconnect();
-  }, []);
-
-  const trapFocus = useCallback((e: KeyboardEvent) => {
-    if (e.key !== "Tab" || !mobileMenuRef.current) return;
-
-    const focusableElements = mobileMenuRef.current.querySelectorAll(
-      'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
-    );
-    const firstElement = focusableElements[0] as HTMLElement;
-    const lastElement = focusableElements[focusableElements.length - 1] as HTMLElement;
-
-    if (e.shiftKey) {
-      if (document.activeElement === firstElement) {
-        e.preventDefault();
-        lastElement.focus();
-      }
-    } else {
-      if (document.activeElement === lastElement) {
-        e.preventDefault();
-        firstElement.focus();
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    if (mobileMenuOpen) {
-      document.body.style.overflow = "hidden";
-      document.addEventListener("keydown", trapFocus);
-      setTimeout(() => firstButtonRef.current?.focus(), 100);
-    } else {
-      document.body.style.overflow = "";
-    }
-    return () => {
-      document.body.style.overflow = "";
-      document.removeEventListener("keydown", trapFocus);
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+        }
+      });
     };
-  }, [mobileMenuOpen, trapFocus]);
 
-  const handleDownloadPDF = () => {
-    const pdfPath = "/files/resume.pdf";
-    const link = document.createElement("a");
-    link.href = pdfPath;
-    link.download = "Mohamed_Lamine_Resume.pdf";
-    link.click();
-  };
+    const observer = new IntersectionObserver(handleIntersection, {
+      threshold: 0.3,
+      rootMargin: "-80px 0px 0px 0px",
+    });
+
+    navLinks.forEach((link) => {
+      const element = document.querySelector(link.href);
+      if (element) observer.observe(element);
+    });
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      observer.disconnect();
+    };
+  }, []);
 
   const handleNavClick = (href: string) => {
     setMobileMenuOpen(false);
@@ -100,129 +55,131 @@ const Header = () => {
     }
   };
 
-  const handleEscKey = (e: React.KeyboardEvent) => {
-    if (e.key === "Escape") {
-      setMobileMenuOpen(false);
-    }
-  };
-
   return (
-    <header
-      className={`fixed top-0 left-0 z-999 w-full transition-all duration-300 ${
-        isScrolled
-          ? "bg-white/95 dark:bg-dark/95 backdrop-blur-md shadow-md"
-          : "bg-transparent"
-      }`}
-      onKeyDown={handleEscKey}
-    >
-      <div className="container">
-        <nav className="py-4 md:py-5" role="navigation" aria-label="Main navigation">
-          <div className="flex items-center justify-between">
-            <Logo />
+    <>
+      <motion.header
+        className="fixed top-0 left-0 right-0 z-50"
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <div className="container-custom">
+          <motion.div
+            className={`mt-4 rounded-2xl transition-all duration-500 ${
+              isScrolled
+                ? "glass-strong shadow-2xl shadow-black/20"
+                : "bg-transparent"
+            }`}
+          >
+            <nav className="flex items-center justify-between px-6 py-4">
+              <Link href="/" className="relative z-50">
+                <Logo />
+              </Link> 
 
-            <div className="hidden md:flex items-center gap-7">
-              {navLinks.map((link) => {
-                const isActive = activeSection === link.href;
-                return (
+              <div className="hidden md:flex items-center gap-8">
+                {navLinks.map((link) => (
                   <button
                     key={link.href}
                     onClick={() => handleNavClick(link.href)}
-                    className={`nav-link inline-flex items-center gap-1.5 ${
-                      isActive ? "!text-dark dark:!text-white" : ""
+                    className={`nav-link ${
+                      activeSection === link.href.slice(1) ? "text-white" : ""
                     }`}
-                    aria-current={isActive ? "true" : undefined}
                   >
-                    {isActive && (
-                      <span
-                        className="w-1.5 h-1.5 rounded-full bg-primary"
-                        aria-hidden
-                      />
-                    )}
                     {link.label}
                   </button>
-                );
-              })}
-            </div>
+                ))}
+              </div>
 
-            <div className="flex items-center gap-3">
-              <ThemeToggle />
+              <div className="hidden md:flex items-center gap-4">
+                <a
+                  href="#contact"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleNavClick("#contact");
+                  }}
+                  className="btn-primary text-sm py-2.5 px-5"
+                >
+                  Let&apos;s talk
+                </a>
+              </div>
 
               <button
-                onClick={handleDownloadPDF}
-                className="btn-primary hidden sm:block"
-              >
-                <span className="text-sm md:text-base text-dark dark:text-white group-hover:text-white">
-                  Download CV
-                </span>
-              </button>
-
-              <button
+                className="md:hidden relative z-50 w-10 h-10 flex items-center justify-center"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="md:hidden p-2 rounded-md hover:bg-softGray dark:hover:bg-white/10 transition-colors"
-                aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-                aria-expanded={mobileMenuOpen}
+                aria-label="Toggle menu"
               >
-                <div className="w-6 flex flex-col gap-1.5">
-                  <span
-                    className={`block h-0.5 w-full bg-dark dark:bg-white transition-all duration-300 ${
-                      mobileMenuOpen ? "rotate-45 translate-y-2" : ""
-                    }`}
+                <div className="flex flex-col gap-1.5 w-5">
+                  <motion.span
+                    className="block h-px bg-white w-full origin-center"
+                    animate={
+                      mobileMenuOpen
+                        ? { rotate: 45, y: 3.5 }
+                        : { rotate: 0, y: 0 }
+                    }
+                    transition={{ duration: 0.3 }}
                   />
-                  <span
-                    className={`block h-0.5 w-full bg-dark dark:bg-white transition-all duration-300 ${
-                      mobileMenuOpen ? "opacity-0" : ""
-                    }`}
+                  <motion.span
+                    className="block h-px bg-white w-full"
+                    animate={{ opacity: mobileMenuOpen ? 0 : 1 }}
+                    transition={{ duration: 0.2 }}
                   />
-                  <span
-                    className={`block h-0.5 w-full bg-dark dark:bg-white transition-all duration-300 ${
-                      mobileMenuOpen ? "-rotate-45 -translate-y-2" : ""
-                    }`}
+                  <motion.span
+                    className="block h-px bg-white w-full origin-center"
+                    animate={
+                      mobileMenuOpen
+                        ? { rotate: -45, y: -3.5 }
+                        : { rotate: 0, y: 0 }
+                    }
+                    transition={{ duration: 0.3 }}
                   />
                 </div>
               </button>
-            </div>
-          </div>
-        </nav>
-      </div>
-
-      <div
-        ref={mobileMenuRef}
-        className={`md:hidden fixed inset-0 top-[73px] bg-white dark:bg-dark z-998 transition-all duration-300 ${
-          mobileMenuOpen
-            ? "opacity-100 translate-y-0"
-            : "opacity-0 -translate-y-full pointer-events-none"
-        }`}
-        role="dialog"
-        aria-modal="true"
-        aria-label="Mobile navigation"
-      >
-        <div className="flex flex-col items-center justify-center h-full gap-8 pb-20">
-          {navLinks.map((link, index) => (
-            <button
-              key={link.href}
-              ref={index === 0 ? firstButtonRef : null}
-              onClick={() => handleNavClick(link.href)}
-              className="text-2xl font-semibold text-dark dark:text-white hover:text-primary transition-all duration-300"
-              style={{
-                opacity: mobileMenuOpen ? 1 : 0,
-                transform: mobileMenuOpen ? "translateY(0)" : "translateY(20px)",
-                transition: `all 0.4s ease-out ${index * 0.1}s`,
-              }}
-            >
-              {link.label}
-            </button>
-          ))}
-          <button
-            onClick={handleDownloadPDF}
-            className="btn-primary mt-4"
-          >
-            <span className="text-lg text-dark dark:text-white group-hover:text-white">
-              Download CV
-            </span>
-          </button>
+            </nav>
+          </motion.div>
         </div>
-      </div>
-    </header>
+      </motion.header>
+
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            className="fixed inset-0 z-40 bg-[#0a0a0a]/95 backdrop-blur-xl md:hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <div className="flex flex-col items-center justify-center h-full gap-8">
+              {navLinks.map((link, index) => (
+                <motion.button
+                  key={link.href}
+                  onClick={() => handleNavClick(link.href)}
+                  className="text-2xl font-medium text-white hover:text-primary transition-colors"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 20 }}
+                  transition={{ delay: index * 0.08, duration: 0.4 }}
+                >
+                  {link.label}
+                </motion.button>
+              ))}
+              <motion.a
+                href="#contact"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleNavClick("#contact");
+                }}
+                className="btn-primary mt-4"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: navLinks.length * 0.08, duration: 0.4 }}
+              >
+                Let&apos;s talk
+              </motion.a>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
 

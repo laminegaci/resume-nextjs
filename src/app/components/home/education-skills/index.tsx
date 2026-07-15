@@ -1,157 +1,150 @@
 "use client";
-import { getDataPath, getImgPath } from "@/utils/image";
+import { useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
 import Image from "next/image";
-import { useEffect, useState } from "react";
-import type { EducationData, Skill } from "@/app/types/portfolio";
-import Reveal from "@/app/components/ui/reveal";
-import SectionLabel from "@/app/components/ui/section-label";
+import { getImgPath } from "@/utils/image";
 
-const skills: Skill[] = [
-  { name: "HTML5", icon: "/images/icon/html.svg", category: "frontend" },
-  { name: "CSS3", icon: "/images/icon/css.svg", category: "frontend" },
-  { name: "JavaScript", icon: "/images/icon/javascript.svg", category: "frontend" },
-  { name: "TypeScript", icon: "/images/icon/typescript.svg", category: "frontend" },
-  { name: "React", icon: "/images/icon/react.svg", category: "frontend" },
-  { name: "Vue", icon: "/images/icon/vue.svg", category: "frontend" },
-  { name: "Next.js", icon: "/images/icon/nextjs.svg", category: "frontend" },
-  { name: "TailwindCSS", icon: "/images/icon/tailwind.svg", category: "frontend" },
-  { name: "Bootstrap", icon: "/images/icon/bootstrap.svg", category: "frontend" },
-  { name: "Semantic UI", icon: "/images/icon/semantic.svg", category: "frontend" },
+const skills = [
   { name: "PHP", icon: "/images/icon/php.svg", category: "backend" },
   { name: "Laravel", icon: "/images/icon/laravel.svg", category: "backend" },
+  { name: "React", icon: "/images/icon/react.svg", category: "frontend" },
+  { name: "Next.js", icon: "/images/icon/nextjs.svg", category: "frontend" },
+  { name: "TypeScript", icon: "/images/icon/typescript.svg", category: "frontend" },
+  { name: "JavaScript", icon: "/images/icon/javascript.svg", category: "frontend" },
+  { name: "Vue", icon: "/images/icon/vue.svg", category: "frontend" },
+  { name: "TailwindCSS", icon: "/images/icon/tailwind.svg", category: "frontend" },
+  { name: "HTML5", icon: "/images/icon/html.svg", category: "frontend" },
+  { name: "CSS3", icon: "/images/icon/css.svg", category: "frontend" },
   { name: "Node.js", icon: "/images/icon/nodejs.svg", category: "backend" },
   { name: "MySQL", icon: "/images/icon/mysql.svg", category: "database" },
-  { name: "Git", icon: "/images/icon/git.svg", category: "tools" },
-  { name: "GitHub", icon: "/images/icon/github.svg", category: "tools" },
-  { name: "GitLab", icon: "/images/icon/gitlab.svg", category: "tools" },
   { name: "Docker", icon: "/images/icon/docker.svg", category: "tools" },
-  { name: "VS Code", icon: "/images/icon/vscode.svg", category: "tools" },
-  { name: "Apache", icon: "/images/icon/apache.svg", category: "tools" },
+  { name: "Git", icon: "/images/icon/git.svg", category: "tools" },
   { name: "Nginx", icon: "/images/icon/nginx.svg", category: "tools" },
+  { name: "Apache", icon: "/images/icon/apache.svg", category: "tools" },
 ];
 
+const categoryOrder = ["backend", "frontend", "database", "tools"];
 const categoryLabels: Record<string, string> = {
-  frontend: "Frontend",
   backend: "Backend",
+  frontend: "Frontend",
   database: "Database",
   tools: "Tools & DevOps",
 };
 
 const EducationSkills = () => {
-  const [educationData, setEducationData] = useState<EducationData | null>(null);
-  const [loading, setLoading] = useState(true);
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [hoveredSkill, setHoveredSkill] = useState<string | null>(null);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(getDataPath("/data/page-data.json"));
-        if (!res.ok) throw new Error("Failed to fetch");
-        const data = await res.json();
-        setEducationData(data?.educationData);
-      } catch {
-        console.error("Error fetching education data:");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  const groupedSkills = skills.reduce<Record<string, Skill[]>>((acc, skill) => {
-    if (!acc[skill.category]) {
-      acc[skill.category] = [];
-    }
-    acc[skill.category].push(skill);
+  const groupedSkills = categoryOrder.reduce<Record<string, typeof skills>>((acc, cat) => {
+    acc[cat] = skills.filter((s) => s.category === cat);
     return acc;
   }, {});
 
   return (
-    <section id="skills" className="scroll-mt-24">
-      <div className="border-t border-mistGray/60 dark:border-white/10 py-20 md:py-32">
-        <div className="container">
-          <SectionLabel number="03" eyebrow="Toolbox" title="What I reach for." />
+    <section id="skills" className="scroll-mt-24 relative py-24 md:py-32">
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-primary/[0.02] to-transparent pointer-events-none" />
+      <div className="container-custom relative z-10">
+        <motion.div
+          ref={ref}
+          initial={{ opacity: 0, y: 40 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8 }}
+        >
+          <div className="section-label">
+            <span className="section-number">02</span>
+            <span className="section-line" />
+            <span className="section-eyebrow">Toolbox</span>
+          </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-16">
             <div className="lg:col-span-2">
               <div className="space-y-10">
-                {Object.entries(groupedSkills).map(([category, categorySkills], idx) => (
-                  <Reveal key={category} delay={idx * 0.08}>
-                    <div>
-                      <div className="flex items-center gap-3 mb-5">
-                        <span className="mono text-[11px] uppercase tracking-wider text-primary">
-                          0{idx + 1}
-                        </span>
-                        <h5 className="text-base font-semibold text-dark dark:text-white">
-                          {categoryLabels[category]}
-                        </h5>
-                        <span className="flex-1 h-px bg-mistGray/60 dark:bg-white/10" />
-                        <span className="mono text-[11px] text-secondary/70 dark:text-gray-500">
-                          {categorySkills.length}
-                        </span>
-                      </div>
-                      <div className="flex flex-wrap gap-2">
-                        {categorySkills.map((skill) => (
-                          <div
-                            key={skill.name}
-                            className="group inline-flex items-center gap-2 px-3 py-2 rounded-full border border-mistGray/60 dark:border-white/10 bg-white/40 dark:bg-white/[0.02] hover:border-primary/40 hover:bg-primary/[0.04] transition-all duration-300"
-                          >
-                            <Image
-                              src={getImgPath(skill.icon)}
-                              alt=""
-                              width={16}
-                              height={16}
-                              className="object-contain"
-                              loading="lazy"
-                            />
-                            <span className="text-sm font-medium text-dark dark:text-white group-hover:text-primary transition-colors">
-                              {skill.name}
-                            </span>
-                          </div>
-                        ))}
-                      </div>
+                {categoryOrder.map((category, idx) => (
+                  <motion.div
+                    key={category}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={isInView ? { opacity: 1, y: 0 } : {}}
+                    transition={{ duration: 0.6, delay: 0.1 + idx * 0.1 }}
+                  >
+                    <div className="flex items-center gap-3 mb-5">
+                      <span className="mono text-[11px] uppercase tracking-wider text-primary">
+                        0{idx + 1}
+                      </span>
+                      <h5 className="text-base font-semibold text-white">
+                        {categoryLabels[category]}
+                      </h5>
+                      <span className="flex-1 h-px bg-white/5" />
+                      <span className="mono text-[11px] text-white/30">
+                        {groupedSkills[category].length}
+                      </span>
                     </div>
-                  </Reveal>
+                    <div className="flex flex-wrap gap-2">
+                      {groupedSkills[category].map((skill) => (
+                        <motion.div
+                          key={skill.name}
+                          onMouseEnter={() => setHoveredSkill(skill.name)}
+                          onMouseLeave={() => setHoveredSkill(null)}
+                          className={`group inline-flex items-center gap-2 px-3 py-2 rounded-full border transition-all duration-300 ${
+                            hoveredSkill === skill.name
+                              ? "border-primary/40 bg-primary/10"
+                              : "border-white/8 bg-white/[0.02]"
+                          }`}
+                          whileHover={{ scale: 1.05 }}
+                        >
+                          <Image
+                            src={getImgPath(skill.icon)}
+                            alt=""
+                            width={16}
+                            height={16}
+                            className="object-contain"
+                            loading="lazy"
+                          />
+                          <span className={`text-sm font-medium transition-colors ${
+                            hoveredSkill === skill.name ? "text-primary" : "text-white/70"
+                          }`}>
+                            {skill.name}
+                          </span>
+                        </motion.div>
+                      ))}
+                    </div>
+                  </motion.div>
                 ))}
               </div>
             </div>
 
-            <Reveal direction="right" className="space-y-6">
-              <div className="rounded-2xl border border-mistGray/60 dark:border-white/10 bg-white/40 dark:bg-white/[0.02] backdrop-blur-sm p-6 md:p-8">
-                <p className="mono text-xs uppercase tracking-wider text-secondary dark:text-gray-500 mb-5">
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              animate={isInView ? { opacity: 1, x: 0 } : {}}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              className="space-y-6"
+            >
+              <div className="rounded-2xl glass p-6 md:p-8 card-3d">
+                <p className="mono text-xs uppercase tracking-wider text-white/40 mb-5">
                   Education
                 </p>
-                {loading ? (
-                  <div className="space-y-4">
-                    {[1, 2].map((i) => (
-                      <div key={i} className="h-20 bg-white dark:bg-dark rounded animate-pulse" />
-                    ))}
+                <div className="space-y-4">
+                  <div className="bg-white/[0.03] rounded-lg p-4 border border-white/5">
+                    <p className="text-sm font-semibold text-white mb-1">
+                      Bachelor&apos;s in Computer Science
+                    </p>
+                    <p className="text-xs text-white/50 leading-relaxed">
+                      Foundation in software engineering, algorithms, and web development technologies.
+                    </p>
                   </div>
-                ) : educationData?.education?.length ? (
-                  <div className="space-y-4">
-                    {educationData!.education.map((edu, index) => (
-                      <div
-                        key={index}
-                        className="bg-white dark:bg-dark rounded-lg p-4 border border-mistGray dark:border-white/10"
-                      >
-                        <p className="text-sm font-semibold text-dark dark:text-white mb-1">
-                          {edu.title}
-                        </p>
-                        <p className="text-xs text-secondary dark:text-gray-400 leading-relaxed">
-                          {edu.description}
-                        </p>
-                      </div>
-                    ))}
+                  <div className="bg-white/[0.03] rounded-lg p-4 border border-white/5">
+                    <p className="text-sm font-semibold text-white mb-1">
+                      Professional Web Development Certification
+                    </p>
+                    <p className="text-xs text-white/50 leading-relaxed">
+                      Specialized training in modern web frameworks, PHP/Laravel ecosystem, and full-stack development.
+                    </p>
                   </div>
-                ) : (
-                  <p className="text-sm text-secondary dark:text-gray-400">
-                    Education details coming soon.
-                  </p>
-                )}
+                </div>
               </div>
-            </Reveal>
+            </motion.div>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

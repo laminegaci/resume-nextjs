@@ -2,12 +2,105 @@
   "workData": [
     {
       "image": "/images/work/site-web-india.png",
-      "title": "Site E-commerce",
-      "client": "India Mahdavi",
+      "title": "India Mahdavi",
+      "client": "Site E-commerce",
       "slug": "site-web-india-mahdavi",
-      "link": "#",
-      "tags": ["Laravel", "E-commerce", "PHP"],
-      "description": "Full-featured e-commerce platform with product management, cart, and payment integration."
+      "link": "https://india-mahdavi.com",
+      "tags": [
+        "Laravel",
+        "Nextjs",
+        "Prestashop",
+        "E-commerce",
+        "Stripe"
+      ],
+      "description": ""
+    },
+    {
+      "image": "/images/work/accordee-begal.png",
+      "title": "Accordée",
+      "client": "Site E-commerce",
+      "slug": "accordee-begal-archives",
+      "link": "https://accordee.begal-archives.com",
+      "tags": [
+        "Laravel",
+        "Simulation",
+        "Dashboard"
+      ],
+      "description": ""
+    },
+    {
+      "image": "/images/work/uvel-electricity.png",
+      "title": "UVEL Electricity",
+      "client": "Site Vitrine",
+      "slug": "uvel-electricity",
+      "link": "https://uvel-electricity.com",
+      "tags": [
+        "Laravel",
+        "Catalogue"
+      ],
+      "description": ""
+    },
+    {
+      "image": "/images/work/biotech-algoria.png",
+      "title": "Biotech",
+      "client": "",
+      "slug": "biotech-algoria",
+      "link": "https://biotech.algoria.dev",
+      "tags": [
+        "Laravel",
+        "Nextjs",
+        "Prestashop",
+        "E-commerce",
+        "Stripe"
+      ],
+      "description": ""
+    },
+    {
+      "image": "/images/work/adi.png",
+      "title": "ADI Performance",
+      "client": "Site Vitrine",
+      "slug": "adi-performance",
+      "link": "https://adi-performance.com",
+      "tags": [
+        "Laravel",
+        "Vuejs"
+      ],
+      "description": ""
+    },
+    {
+      "image": "/images/work/sada-luxe.png",
+      "title": "Sada Luxe",
+      "client": "Site E-commerce",
+      "slug": "sada-luxe",
+      "link": "https://sada-luxe.com",
+      "tags": [
+        "Laravel",
+        "E-commerce"
+      ],
+      "description": ""
+    },
+    {
+      "image": "/images/work/cianedecor.png",
+      "title": "Ciane Décor",
+      "client": "Site Vitrine",
+      "slug": "cianedecor",
+      "link": "https://cianedecor.com",
+      "tags": [
+        "Laravel"
+      ],
+      "description": ""
+    },
+    {
+      "image": "/images/work/begal-store.png",
+      "title": "Woodoria",
+      "client": "Site E-commerce",
+      "slug": "Woodoria",
+      "link": "https://store.begal-archives.com/?locale=fr",
+      "tags": [
+        "Laravel",
+        "bagisto"
+      ],
+      "description": ""
     },
     {
       "image": "/images/work/erp-india.png",
@@ -15,8 +108,12 @@
       "client": "India Mahdavi",
       "slug": "erp-india-mahdavi",
       "link": "#",
-      "tags": ["Laravel", "ERP", "MySQL"],
-      "description": "Enterprise resource planning system for inventory, orders, and business operations management."
+      "tags": [
+        "Laravel",
+        "ERP",
+        "MySQL"
+      ],
+      "description": ""
     },
     {
       "image": "/images/work/at.png",
@@ -24,7 +121,11 @@
       "client": "BA",
       "slug": "at-management",
       "link": "#",
-      "tags": ["PHP", "Laravel", "Web App"],
+      "tags": [
+        "PHP",
+        "Laravel",
+        "Livewire"
+      ],
       "description": "Custom web application for managing AT services and workflows."
     },
     {
@@ -33,7 +134,11 @@
       "client": "Henkel",
       "slug": "web-application-for-group-henkel",
       "link": "#",
-      "tags": ["Laravel", "Livewire", "Inertia.js"],
+      "tags": [
+        "Laravel",
+        "Livewire",
+        "Inertia.js"
+      ],
       "description": "Scalable web application built with modern Laravel stack for enterprise client."
     },
     {
@@ -42,7 +147,11 @@
       "client": "Personal Project",
       "slug": "allo-khedma",
       "link": "#",
-      "tags": ["Laravel", "Services", "PHP"],
+      "tags": [
+        "Laravel",
+        "Services",
+        "PHP"
+      ],
       "description": "Service marketplace platform connecting professionals with clients."
     },
     {
@@ -51,17 +160,12 @@
       "client": "Personal Project",
       "slug": "hanooty",
       "link": "#",
-      "tags": ["Laravel", "E-commerce", "Retail"],
+      "tags": [
+        "Laravel",
+        "E-commerce",
+        "Retail"
+      ],
       "description": "Retail management and e-commerce solution for local businesses."
-    },
-    {
-      "image": "/images/work/adi.png",
-      "title": "ADI Performance",
-      "client": "ADI",
-      "slug": "adi-performance",
-      "link": "#",
-      "tags": ["PHP", "Laravel", "Dashboard"],
-      "description": "Performance tracking and analytics dashboard for business metrics."
     },
     {
       "image": "/images/work/khidmapub.jpg",
@@ -69,7 +173,11 @@
       "client": "Khidma Pub",
       "slug": "khidma-pub-public-website",
       "link": "#",
-      "tags": ["Laravel", "CMS", "Website"],
+      "tags": [
+        "Laravel",
+        "CMS",
+        "Website"
+      ],
       "description": "Public-facing website with content management and service showcase."
     },
     {
@@ -78,7 +186,11 @@
       "client": "Edisoft",
       "slug": "web-application-for-customer-management",
       "link": "#",
-      "tags": ["PHP", "CRM", "Database"],
+      "tags": [
+        "PHP",
+        "CRM",
+        "Database"
+      ],
       "description": "Customer relationship management web application for client tracking and support."
     }
   ]
