@@ -6,11 +6,11 @@ const Logo = () => {
   return (
     <Link href="/" className="block">
       <Image
-        src={getImgPath("/images/logo/logo.svg")}
+        src={getImgPath("/images/logo/gml.png")}
         alt="logo"
-        width={50}
+        width={100}
         height={50}
-        className="w-10 h-10 md:w-12 md:h-12"
+        className="h-10 md:w-20 md:h-12"
       />
     </Link>
   );
