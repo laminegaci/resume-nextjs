@@ -18,12 +18,11 @@
     {
       "image": "/images/work/accordee-begal.png",
       "title": "Accordée",
-      "client": "Site E-commerce",
+      "client": "Site Vitrine",
       "slug": "accordee-begal-archives",
       "link": "https://accordee.begal-archives.com",
       "tags": [
         "Laravel",
-        "Simulation",
         "Dashboard"
       ],
       "description": ""
