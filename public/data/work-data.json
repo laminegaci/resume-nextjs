@@ -16,13 +16,26 @@
       "description": ""
     },
     {
-      "image": "/images/work/accordee-begal.png",
-      "title": "Accordée",
+      "image": "/images/work/accordee.png",
+      "title": "Accordee",
       "client": "Site Vitrine",
-      "slug": "accordee-begal-archives",
-      "link": "https://accordee.begal-archives.com",
+      "slug": "accordee",
+      "link": "https://accordee.fr",
       "tags": [
         "Laravel",
+        "Dashboard"
+      ],
+      "description": ""
+    },
+    {
+      "image": "/images/work/zltools.png",
+      "title": "ZL tools",
+      "client": "Site E-commerce",
+      "slug": "zltools",
+      "link": "https://storezltools.com",
+      "tags": [
+        "Laravel",
+        "E-commerce",
         "Dashboard"
       ],
       "description": ""
@@ -72,6 +85,18 @@
       "client": "Site E-commerce",
       "slug": "sada-luxe",
       "link": "https://sada-luxe.com",
+      "tags": [
+        "Laravel",
+        "E-commerce"
+      ],
+      "description": ""
+    },
+    {
+      "image": "/images/work/setelhabaib.png",
+      "title": "Set elhabaib",
+      "client": "Site E-commerce",
+      "slug": "setelhabaib",
+      "link": "https://setelhabaib.com",
       "tags": [
         "Laravel",
         "E-commerce"
